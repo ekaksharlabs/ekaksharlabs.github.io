@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EkLabs - Pioneering Industrial AI and Vision Systems</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Apply custom font and enable smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: white;
+        }
+
+        /* Create a container for scroll-snapping */
+        .scroll-container {
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        /* Define where each section should snap */
+        .scroll-section {
+            scroll-snap-align: start;
+        }
+
+        /* Style for the video background container */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Behind everything */
+        }
+        
+        /* Style for each individual video */
+        .video-background video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the entire area */
+            opacity: 0; /* Hidden by default */
+            transition: opacity 1s ease-in-out; /* Smooth fade transition */
+        }
+
+        /* Class to make a video visible */
+        .video-background video.active {
+            opacity: 1;
+        }
+        
+        /* Dark overlay to ensure text is always readable */
+        .dark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* 60% black overlay */
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-black antialiased overflow-hidden">
+
+    <!-- Container for all background videos -->
+    <div class="video-background">
+        <video id="video1" class="active" autoplay loop muted playsinline>
+            <!-- <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-a-dark-wavy-object-4001-large.mp4" type="video/mp4"> -->
+            <source src="./assets/videos/home.mp4" type="video/mp4">
+        </video>
+        <video id="video2" autoplay loop muted playsinline>
+            <!-- <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-liquid-bubbles-in-a-dark-background-43500-large.mp4" type="video/mp4"> -->
+             <source src="./assets/videos/cv.mp4" type="video/mp4">
+        </video>
+        <video id="video3" autoplay loop muted playsinline>
+            <!-- <source src="https://assets.mixkit.co/videos/preview/mixkit-blue-and-pink-abstract-liquid-in-motion-4214-large.mp4" type="video/mp4"> -->
+             <source src="./assets/videos/hyper.mp4" type="video/mp4">
+        </video>
+        <video id="video4" autoplay loop muted playsinline>
+            <!-- <source src="https://assets.mixkit.co/videos/preview/mixkit-robotic-arm-doing-a-complex-move-42124-large.mp4" type="video/mp4"> -->
+             <source src="./assets/videos/robo.mp4" type="video/mp4">
+        </video>
+        <video id="video5" autoplay loop muted playsinline>
+            <!-- <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-machine-working-with-a-glow-34573-large.mp4" type="video/mp4"> -->
+             <source src="./assets/videos/career.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Dark overlay for text readability -->
+    <div class="dark-overlay"></div>
+
+    <!-- Scrollable container for all content sections -->
+    <div id="scroll-container" class="scroll-container">
+
+        <!-- Header (fixed position) -->
+        <header class="fixed top-0 left-0 right-0 z-10 py-8 px-8 sm:px-12 lg:px-16">
+            <nav class="flex justify-between items-center">
+                <a href="#home" class="text-xl font-bold tracking-widest uppercase">EkLabs</a>
+                <ul class="hidden md:flex items-center space-x-10">
+                    <li><a href="#vision" class="text-base text-gray-200 hover:text-white transition-colors">Vision</a></li>
+                    <li><a href="#hyperspectral" class="text-base text-gray-200 hover:text-white transition-colors">Hyperspectral</a></li>
+                    <li><a href="#robotics" class="text-base text-gray-200 hover:text-white transition-colors">Robotics</a></li>
+                    <li><a href="#careers" class="text-base text-gray-200 hover:text-white transition-colors">Careers</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Section 1: Hero -->
+        <section id="home" data-video-target="video1" class="scroll-section h-screen flex items-center justify-center text-center px-4">
+            <div class="max-w-5xl">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tighter">
+                    Advancing Industry<br>
+                    with Intelligent<br>
+                    Perception Systems
+                </h1>
+                <p class="mt-6 text-xl text-gray-300">
+                    Pioneering AI-driven solutions for complex industrial challenges.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 2: Computer Vision -->
+        <section id="vision" data-video-target="video2" class="scroll-section h-screen flex items-center justify-center text-center px-4">
+            <div class="max-w-4xl">
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tighter">
+                    Mastery in<br>Computer Vision
+                </h2>
+                <p class="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">
+                    We develop robust computer vision models that automate quality control, enhance safety, and optimize production lines, turning visual data into actionable intelligence.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: HyperSpectral Imaging -->
+        <section id="hyperspectral" data-video-target="video3" class="scroll-section h-screen flex items-center justify-center text-center px-4">
+            <div class="max-w-4xl">
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tighter">
+                    Beyond Human Sight<br>with Hyperspectral Imaging
+                </h2>
+                <p class="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">
+                    Our hyperspectral solutions analyze material compositions with incredible precision, enabling non-destructive testing and analysis in agriculture, manufacturing, and environmental monitoring.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 4: Robotics -->
+        <section id="robotics" data-video-target="video4" class="scroll-section h-screen flex items-center justify-center text-center px-4">
+            <div class="max-w-4xl">
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tighter">
+                    Intelligent Robotics<br>for a Smarter Workflow
+                </h2>
+                <p class="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">
+                    We integrate our advanced vision systems with robotic platforms to create autonomous solutions that handle complex tasks with speed, precision, and reliability.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Section 5: Careers -->
+        <section id="careers" data-video-target="video5" class="scroll-section h-screen flex items-center justify-center text-center px-4">
+            <div class="max-w-4xl">
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tighter">
+                    Shape the Future<br>With Us
+                </h2>
+                <p class="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">
+                    We are always looking for brilliant minds to join our mission. If you are a passionate Researcher or Engineer with a drive to solve real-world problems, we want to hear from you.
+                </p>
+                <a href="mailto:ekaksharlabs@gmail.com" class="mt-8 inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors">
+                    Reach Out
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // This script handles changing the background video when a new section is scrolled into view.
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.scroll-section');
+            const videos = document.querySelectorAll('.video-background video');
+
+            // The Intersection Observer API is a modern, efficient way to detect
+            // when an element enters the viewport.
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // entry.isIntersecting is true if the element is in the viewport
+                    if (entry.isIntersecting) {
+                        // Get the target video ID from the section's data attribute
+                        const videoId = entry.target.getAttribute('data-video-target');
+                        
+                        // Remove 'active' class from all videos to make them transparent
+                        videos.forEach(video => {
+                            video.classList.remove('active');
+                        });
+
+                        // Add 'active' class to the target video to fade it in
+                        const targetVideo = document.getElementById(videoId);
+                        if (targetVideo) {
+                            targetVideo.classList.add('active');
+                        }
+                    }
+                });
+            }, {
+                // This threshold means the callback will trigger when 50%
+                // of the section is visible.
+                threshold: 0.5 
+            });
+
+            // Tell the observer to watch each of our content sections.
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
