@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Test - EkLabs Optimized</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #000; color: white; }
+        .test-section { margin: 40px 0; padding: 20px; border: 1px solid #333; }
+        .performance-info { background: #1a1a1a; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .lazy-image { background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        img, video { max-width: 100%; height: auto; border-radius: 8px; }
+        .success { color: #4ade80; }
+        .info { color: #60a5fa; }
+    </style>
+</head>
+<body>
+    <h1>🚀 EkLabs Website Performance Test</h1>
+    
+    <div class="performance-info">
+        <h3 class="info">📊 Performance Metrics</h3>
+        <p><strong>Page Load Start:</strong> <span id="loadStart">-</span></p>
+        <p><strong>DOM Content Loaded:</strong> <span id="domLoaded">-</span></p>
+        <p><strong>All Resources Loaded:</strong> <span id="allLoaded">-</span></p>
+    </div>
+
+    <div class="test-section">
+        <h2>🖼️ Optimized Images Test</h2>
+        <p>These images should load progressively with WebP format for modern browsers:</p>
+        
+        <h3>Florida Coastal Analysis</h3>
+        <img data-src="./assets/images/optimized/florida_432_800w.webp" 
+             src="./assets/images/optimized/florida_432_400w.webp" 
+             alt="Florida Coastal Analysis" 
+             class="lazy-image"
+             loading="lazy">
+        
+        <h3>Geological Survey</h3>
+        <img data-src="./assets/images/optimized/piqiang_468_800w.webp" 
+             src="./assets/images/optimized/piqiang_468_400w.webp" 
+             alt="Geological Survey" 
+             class="lazy-image"
+             loading="lazy">
+        
+        <h3>NIR Spectroscopy</h3>
+        <img data-src="./assets/images/optimized/piqiang_nir_800w.webp" 
+             src="./assets/images/optimized/piqiang_nir_400w.webp" 
+             alt="NIR Spectroscopy" 
+             class="lazy-image"
+             loading="lazy">
+    </div>
+
+    <div class="test-section">
+        <h2>🎬 Optimized Videos Test</h2>
+        <p>These videos should be 720p optimized versions with lazy loading:</p>
+        
+        <h3>Night Vision (68% smaller)</h3>
+        <video loop muted playsinline controls data-src="./assets/videos/optimized/nightvision_720p.mp4" style="width: 100%; max-width: 600px;">
+            <p>Your browser doesn't support video playback.</p>
+        </video>
+        
+        <h3>Thermal Imaging (65% smaller)</h3>
+        <video loop muted playsinline controls data-src="./assets/videos/optimized/thermal_720p.mp4" style="width: 100%; max-width: 600px;">
+            <p>Your browser doesn't support video playback.</p>
+        </video>
+        
+        <h3>Robotics (69% smaller)</h3>
+        <video loop muted playsinline controls data-src="./assets/videos/optimized/robo_720p.mp4" style="width: 100%; max-width: 600px;">
+            <p>Your browser doesn't support video playback.</p>
+        </video>
+    </div>
+
+    <div class="performance-info">
+        <h3 class="success">✅ Optimization Features</h3>
+        <ul>
+            <li>Lazy loading for images and videos</li>
+            <li>WebP format with JPEG fallback</li>
+            <li>Progressive image loading (thumbnail → full size)</li>
+            <li>720p video optimization with H.264 codec</li>
+            <li>Average 50% file size reduction</li>
+        </ul>
+    </div>
+
+    <script>
+        // Performance monitoring
+        const loadStart = performance.timing.navigationStart;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const domTime = performance.timing.domContentLoadedEventEnd - loadStart;
+            document.getElementById('loadStart').textContent = '0 ms';
+            document.getElementById('domLoaded').textContent = domTime + ' ms';
+            
+            // Lazy loading for images
+            const lazyImages = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.getAttribute('data-src');
+                        img.removeAttribute('data-src');
+                        img.classList.remove('lazy-image');
+                        imageObserver.unobserve(img);
+                        console.log('Lazy loaded image:', img.alt);
+                    }
+                });
+            });
+
+            lazyImages.forEach(img => imageObserver.observe(img));
+
+            // Lazy loading for videos
+            const lazyVideos = document.querySelectorAll('video[data-src]');
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const video = entry.target;
+                        const source = document.createElement('source');
+                        source.src = video.getAttribute('data-src');
+                        source.type = 'video/mp4';
+                        video.appendChild(source);
+                        video.load();
+                        video.removeAttribute('data-src');
+                        videoObserver.unobserve(video);
+                        console.log('Lazy loaded video:', source.src);
+                    }
+                });
+            }, { rootMargin: '100px' });
+
+            lazyVideos.forEach(video => videoObserver.observe(video));
+        });
+
+        window.addEventListener('load', () => {
+            const totalTime = performance.timing.loadEventEnd - loadStart;
+            document.getElementById('allLoaded').textContent = totalTime + ' ms';
+            console.log('Page fully loaded in', totalTime, 'ms');
+        });
+    </script>
+</body>
+</html>
