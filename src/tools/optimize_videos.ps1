@@ -16,14 +16,9 @@ if (!(Test-Path $optimizedDir)) {
 
 # Define videos to optimize
 $videos = @(
-    @{input="assets\videos\fireball_small.mp4"; output="fireball_small_720p.mp4"},
-    @{input="assets\videos\nightvision.mp4"; output="nightvision_720p.mp4"},
-    @{input="assets\videos\thermal.mp4"; output="thermal_720p.mp4"},
-    @{input="assets\videos\particle.mp4"; output="particle_720p.mp4"},
-    @{input="assets\videos\motion.mp4"; output="motion_720p.mp4"},
-    @{input="assets\videos\robo.mp4"; output="robo_720p.mp4"},
-    @{input="assets\videos\bacteria.mp4"; output="bacteria_720p.mp4"},
-    @{input="assets\videos\career.mp4"; output="career_720p.mp4"}
+    @{input="..\..\assets\videos\robotics\factory.mp4"; output="eklabs-website\assets\videos\optimized\robotics\factory_optimized.mp4"},
+    @{input="..\..\assets\videos\robotics\labs.mp4"; output="eklabs-website\assets\videos\optimized\robotics\labs_optimized.mp4"},
+    @{input="..\..\assets\videos\robotics\manufacturing.mp4"; output="eklabs-website\assets\videos\optimized\robotics\manufacturing_optimized.mp4"}
 )
 
 # Check if FFmpeg is installed

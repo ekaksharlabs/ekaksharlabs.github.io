@@ -22,9 +22,7 @@
             scroll-behavior: smooth;
             box-sizing: border-box;
         }
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
+    *, *:before, *:after { box-sizing: inherit; }
         body {
             font-family: 'Inter', sans-serif;
             color: white;
@@ -32,20 +30,9 @@
         }
 
         /* Background video styling similar to main page */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-        }
+    .video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; }
 
-        .video-background video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    .video-background video { width: 100%; height: 100%; object-fit: cover; }
 
         /* Dark overlay for readability */
         .content-overlay {
@@ -55,48 +42,16 @@
             min-height: 100vh;
         }
 
-        /* Interactive blob effect similar to services section */
-        .blob-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
+    /* Interactive blob effect similar to services section */
+    .blob-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-        .blob {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.1), transparent);
-            border-radius: 50%;
-            filter: blur(40px);
-            transition: all 0.3s ease;
-        }
+    .blob { position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.1), transparent); border-radius: 50%; filter: blur(40px); transition: all 0.3s ease; }
 
         /* Code blocks styling */
-        .code-block {
-            background: #1a1a1a;
-            border: 1px solid #374151;
-            border-radius: 8px;
-            padding: 1rem;
-            font-family: 'Courier New', monospace;
-            font-size: 0.875rem;
-            overflow-x: auto;
-        }
+    .code-block { background: #1a1a1a; border: 1px solid #374151; border-radius: 8px; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.875rem; overflow-x: auto; }
 
         /* Quote styling */
-        .quote {
-            border-left: 4px solid #3b82f6;
-            padding-left: 1rem;
-            margin: 1.5rem 0;
-            font-style: italic;
-            background: rgba(59, 130, 246, 0.1);
-            padding: 1rem;
-            border-radius: 0 8px 8px 0;
-        }
+    .quote { border-left: 4px solid #3b82f6; padding-left: 1rem; margin: 1.5rem 0; font-style: italic; background: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: 0 8px 8px 0; }
 
         /* Download button animation */
         .download-btn {
@@ -114,8 +69,8 @@
 <body>
     <!-- Background Video -->
     <div class="video-background">
-        <video autoplay muted loop>
-            <source src="../assets/videos/hyperspectral-data.mp4" type="video/mp4">
+        <video autoplay muted loop playsinline>
+            <source src="../../../assets/videos/hyper.mp4" type="video/mp4">
             <!-- Fallback for browsers that don't support video -->
         </video>
     </div>
@@ -130,11 +85,11 @@
         <!-- Header with Navigation -->
         <header class="sticky top-0 bg-gray-950 bg-opacity-90 backdrop-blur-sm border-b border-gray-800 z-50">
             <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-                <a href="../index.html" class="flex items-center space-x-2">
+                <a href="../../../index.html" class="flex items-center space-x-2">
                     <span class="font-bold text-xl text-blue-400">EkLabs</span>
                 </a>
                 <nav class="flex items-center space-x-6">
-                    <a href="../index.html" class="text-gray-300 hover:text-white transition-colors flex items-center">
+                    <a href="../../../index.html" class="text-gray-300 hover:text-white transition-colors flex items-center">
                         <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>
                         Back to Home
                     </a>
@@ -287,8 +242,47 @@ def process_hyperspectral_cube(data_cube):
                             <p class="text-gray-200">
                                 "The integration of hyperspectral imaging with AI represents a paradigm shift in industrial quality control, enabling detection of anomalies invisible to the human eye and traditional imaging systems."
                             </p>
-                            <footer class="text-gray-400 mt-2">— Dr. Hrishikesh, Head of Research, EkLabs</footer>
+                            <footer class="text-gray-400 mt-2">— Research Team, EkLabs</footer>
                         </div>
+                    </div>
+                </section>
+
+                <!-- Featured YouTube and Media Grid -->
+                <section class="space-y-6">
+                    <h2 class="text-2xl font-bold text-blue-400">Hyperspectral AI: From Photons to Decisions</h2>
+                    <p class="text-gray-300 leading-relaxed">
+                        Hyperspectral imaging captures hundreds of contiguous spectral bands per pixel, enabling material identification and anomaly detection that far exceed RGB. When fused with modern deep learning, it unlocks powerful, real-time industrial systems. Below is a short explainer video, followed by a gallery of spectral composites and application examples.
+                    </p>
+
+                    <!-- <iframe width="1236" height="695" src="https://www.youtube.com/embed/FjKVptgr3uU" title="NASA ARSET: Overview of Hyperspectral Data,  Part 1/3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+
+
+                    <!-- YouTube Embed (replace with your actual video ID) -->
+                    <div class="aspect-video w-full rounded-lg overflow-hidden border border-gray-700">
+                        <iframe
+                            src="https://www.youtube.com/embed/FjKVptgr3uU"
+                            title="Hyperspectral AI Overview"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            class="w-full h-full"
+                        ></iframe>
+                    </div>
+                    
+                    <!-- Clickable Image Grid -->
+                    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <a href="../../../assets/images/hyper/florida/florida_etm_2011314_432_xlrg.jpg" target="_blank" class="group relative block rounded-md overflow-hidden border border-gray-700">
+                            <img src="../../../assets/images/optimized/florida_432_400w.jpg" alt="Florida 432 Composite" class="w-full h-40 object-cover group-hover:opacity-90 transition" loading="lazy"/>
+                            <span class="absolute bottom-2 left-2 text-xs bg-black/60 px-2 py-1 rounded">Florida 432</span>
+                        </a>
+                        <a href="../../../assets/images/hyper/piqiang/piqiang_ast_2005055_468_decorrelation_lrg.jpg" target="_blank" class="group relative block rounded-md overflow-hidden border border-gray-700">
+                            <img src="../../../assets/images/optimized/piqiang_468_400w.jpg" alt="Piqiang 468 Decorrelated" class="w-full h-40 object-cover group-hover:opacity-90 transition" loading="lazy"/>
+                            <span class="absolute bottom-2 left-2 text-xs bg-black/60 px-2 py-1 rounded">Piqiang 468</span>
+                        </a>
+                        <a href="../../../assets/images/hyper/piqiang/piqiang_ast_2005055_nir_gray_lrg.jpg" target="_blank" class="group relative block rounded-md overflow-hidden border border-gray-700">
+                            <img src="../../../assets/images/optimized/piqiang_nir_400w.jpg" alt="Piqiang NIR Grayscale" class="w-full h-40 object-cover group-hover:opacity-90 transition" loading="lazy"/>
+                            <span class="absolute bottom-2 left-2 text-xs bg-black/60 px-2 py-1 rounded">Piqiang NIR</span>
+                        </a>
                     </div>
                 </section>
 
@@ -326,6 +320,218 @@ def process_hyperspectral_cube(data_cube):
                     </div>
                 </section>
 
+                <!-- Long-Form Blog Content (3000+ words) -->
+                <section class="space-y-6">
+                    <h2 class="text-2xl font-bold text-blue-400">A Practical Guide to Hyperspectral AI in Industry</h2>
+                    <p class="text-gray-300 leading-relaxed">
+                        Hyperspectral imaging (HSI) systems measure reflected or emitted light across tens to hundreds of narrow, contiguous spectral bands. Unlike RGB, which compresses spectral nuance into just three channels, HSI produces a data cube: X and Y are spatial dimensions, and the Z-axis carries spectral intensity across wavelengths. This richer signal makes subtle material differences legible—coatings, contaminants, moisture, grain alignment, mineralogy, and chemical composition—which is why HSI is increasingly central to quality control, sorting, and non-destructive evaluation. When integrated with well-designed AI models and real-time pipelines, HSI becomes a practical, robust tool for the factory floor.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        In this article, we translate state-of-the-art research and field experience into an actionable blueprint for deploying HSI + AI systems. We outline how to select optics and sensors, engineer lighting, build efficient data pipelines, train models that generalize, and validate performance against production constraints such as takt time and uptime. We also link to peer-reviewed literature for deeper reading (see References). To keep this practical, we highlight failure modes, guardrails, and the economics that determine whether a pilot becomes a production win.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        The guiding principle is simple: optimize the whole system, not just the model. Spectral performance without illumination stability is brittle. Edge throughput without a labeling plan yields poor decisions. And models that excel on single-lot datasets can fail when suppliers or fixtures change. Success with HSI blends physics, engineering, data, and operations into one coherent workflow.
+                    </p>
+                    <h3 class="text-xl font-semibold">1) Hardware Fundamentals</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        An HSI system consists of an imaging spectrometer, optics, illumination, motion/scan mechanics (if required), and compute. Common modalities include pushbroom (line-scan) spectrometers for conveyor applications, and snapshot arrays for static scenes. Key levers:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li><span class="font-semibold">Spectral range:</span> VNIR (400–1000 nm) captures visible and near-infrared; SWIR (1000–2500 nm) resolves moisture, polymers, and organics; MWIR/LWIR enable thermal emissivity studies.</li>
+                        <li><span class="font-semibold">Spectral resolution:</span> Narrower bands increase separability but raise noise; tune to application-specific signatures and SNR.</li>
+                        <li><span class="font-semibold">Optics and F/#:</span> Throughput affects exposure; aberrations and stray light impact calibration and downstream model performance.</li>
+                        <li><span class="font-semibold">Illumination geometry:</span> Uniform, stable lighting is non-negotiable; use line lights for pushbroom, integrate diffusers to minimize specular highlights.</li>
+                        <li><span class="font-semibold">Motion control:</span> In pushbroom systems, conveyor speed and line rate must match to avoid aspect ratio distortion and ensure consistent per-pixel dwell time.</li>
+                    </ul>
+                    <p class="text-gray-300 leading-relaxed">
+                        Practical hint: If you’re new to HSI, start with VNIR on a controlled line. Validate SNR and class separability before scaling spectral range. Many projects stall not on algorithms, but on lighting and fixture stability. A 2% drift in intensity or angle can erase margins that your classifier depends on.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Choosing between pushbroom and snapshot modalities depends on scene dynamics. Pushbroom excels on moving targets with consistent motion (web materials, conveyors). Snapshot sensors simplify mechanics for static or slow scenes, at the cost of per-band SNR and sometimes spatial resolution. If you must scan, prioritize mechanical rigidity, vibration isolation, and encoder integration—the best models can’t rescue smeared data.
+                    </p>
+                    <h3 class="text-xl font-semibold">2) Calibration and Preprocessing</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Raw HSI data cubes require careful calibration to remove system and environmental effects. A standard workflow includes dark current subtraction, white reference normalization (to convert to reflectance), stray light correction, and wavelength registration. For production lines, schedule automated white/dark cycles and monitor calibration metrics over time.
+                    </p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li>Automate dark/white captures during shift changes or when the line idles to minimize disruption.</li>
+                        <li>Log illumination temperature and intensity; compensate or alert when drift exceeds thresholds.</li>
+                        <li>Quantize and compress data with care; preserve spectral fidelity for downstream models.</li>
+                    </ul>
+                    <p class="text-gray-300 leading-relaxed">
+                        Preprocessing also includes denoising (e.g., Savitzky–Golay filtering), baseline correction, and dimensionality reduction. While PCA/ICA are classic tools, modern approaches learn spectral embeddings jointly with the task model, often outperforming handcrafted pipelines in varying conditions.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Treat calibration as a monitored service. Track white-reference histograms, per-band SNR, and wavelength alignment using known spectral features. Version your calibration artifacts so you can reproduce decisions and audit changes. When anomalies appear in production, nine times out of ten the root cause lies upstream of the model—and calibration logs tell the story.
+                    </p>
+                    <h3 class="text-xl font-semibold">3) Labeling and Dataset Design</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Building a representative dataset is the most important predictor of success. For classification or segmentation, curate examples across the true distribution of materials, suppliers, and environmental conditions. Explicitly include borderline cases and expected drift: new suppliers, slightly different coatings, aging fixtures, sensor re-calibrations.
+                    </p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li>Define classes by decision intent (e.g., accept/reject) rather than material taxonomy when appropriate; this simplifies downstream operations.</li>
+                        <li>Capture paired RGB + HSI when possible; RGB aids annotation and debugging, and can serve as a fallback modality.</li>
+                        <li>Use spectral regions-of-interest (ROIs) for faster labeling; don’t annotate every pixel if area labels suffice for your KPI.</li>
+                    </ul>
+                    <p class="text-gray-300 leading-relaxed">
+                        For rare defects, deploy a conservative model in shadow mode to flag uncertain regions for review. Over time, you’ll concentrate labeling effort on decision boundaries where it matters most. Stratify by lot and time; a model that performs well within-lot but poorly across-lot isn’t production-ready.
+                    </p>
+                    <h3 class="text-xl font-semibold">4) Model Architectures that Work</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Effective models exploit both spectral and spatial structure. Three patterns are prevalent:
+                    </p>
+                    <ol class="list-decimal list-inside text-gray-300 space-y-1">
+                        <li><span class="font-semibold">1D spectral networks</span> operate along the spectral axis per pixel, enabling fast, low-parameter classifiers for homogeneous scenes.</li>
+                        <li><span class="font-semibold">2D CNNs on composite bands</span> (e.g., choose 8–16 informative bands) balance speed with spatial context.</li>
+                        <li><span class="font-semibold">3D CNNs/transformers</span> jointly model spectra and spatial neighborhoods, yielding top accuracy when compute allows.</li>
+                    </ol>
+                    <p class="text-gray-300 leading-relaxed">
+                        In production, hybrid strategies excel: a lightweight 1D spectral gate routes ambiguous regions to a heavier 3D model, preserving throughput. Temporal smoothing with causal filters reduces flicker in decisions.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Self-supervised pretraining on unlabeled cubes can dramatically reduce labeled data requirements. Contrastive methods that treat neighboring spectra as positives and distant spectra as negatives build robust embeddings. Physics-informed networks that encode smoothness and known absorption features further stabilize predictions under lighting drift.
+                    </p>
+                    <h3 class="text-xl font-semibold">5) Real-Time Inference and Edge Compute</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Line rates impose tight budgets. Aim for sub-50 ms end-to-end latency per frame region. Techniques that help:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li>Quantize models to INT8 with careful calibration; validate spectral sensitivity post-quantization.</li>
+                        <li>Use CUDA graphs and fused kernels to minimize overhead.</li>
+                        <li>Tessellate the scene; process ROIs prioritized by motion and prior detections.</li>
+                        <li>Cache per-material spectral templates and enable early exits when matches are confident.</li>
+                    </ul>
+                    <p class="text-gray-300 leading-relaxed">
+                        Architecturally, separate acquisition from inference and decision threads with lock-free queues. Handle backpressure gracefully—if the model can’t keep up, degrade (larger stride, band selection, or route to a faster fallback) rather than dropping frames blindly. Expose health metrics—frame rate, queue depth, GPU memory, per-band SNR—to your HMI/SCADA.
+                    </p>
+                    <h3 class="text-xl font-semibold">6) Validation, KPIs, and Operations</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Define KPIs in operational terms (FPY, ppb defect rate, yield, scrap cost) and measure on blind runs. Include:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li>Confusion matrices by material and lot</li>
+                        <li>ROC/PR curves for threshold tuning under cost asymmetry</li>
+                        <li>MTBF/MTTR for the full system (camera, lighting, compute)</li>
+                        <li>Uptime, takt time impact, and operator interventions</li>
+                    </ul>
+                    <p class="text-gray-300 leading-relaxed">
+                        Close the loop with root-cause analysis: when misclassifications occur, correlate with sensor logs (temperature, exposure), lighting drift, and asset changes. Maintain a golden-set replay harness to regression-test models before deployment.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Validation isn’t a one-off event; schedule periodic drift audits replaying fresh data through current and prior models. Track calibration deltas and model retrain cadence. Treat updates like any other change-controlled process on the line, with rollbacks and sign-offs.
+                    </p>
+                    <h3 class="text-xl font-semibold">7) Economics and Scale-Up</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        The ROI case for HSI+AI depends on throughput, scrap reduction, labor reallocation, and avoided recalls. Start with a narrow, high-value defect or sorting use case; add classes once the pipeline is stable. Treat optics and lighting as capex with multi-year lifespan; model compute and maintenance as opex. Ensure your vendor contracts specify replacement SLAs for lighting and sensors.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        A practical value ladder: Phase 1—install and calibrate; prove detectability on golden/defect sets. Phase 2—shadow mode on the live line; quantify false alarms and misses with operator feedback. Phase 3—closed-loop interventions (rejectors or robot pick) with guarded thresholds. Phase 4—broaden classes and integrate with MES/ERP for traceability. Gate each phase with KPI-based exit criteria.
+                    </p>
+                    <h3 class="text-xl font-semibold">8) Common Failure Modes</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li>Overfitting to one supplier or lot; fix with diversified sampling and domain randomization.</li>
+                        <li>Ignoring polarization and BRDF effects; fix with lighting geometry controls and cross-polarized setups.</li>
+                        <li>Data drift from lens fouling; add automated lens checks and cleaning SOPs.</li>
+                        <li>Misaligned conveyor speed and line rate; calibrate and monitor continuously.</li>
+                    </ul>
+                    <p class="text-gray-300 leading-relaxed">
+                        Beware of conflating chemical sameness with spectral sameness. Two coatings with the same formulation can yield different spectra due to curing or surface roughness; different chemistries can look similar under certain lighting. Always validate separability under your exact illumination and view geometry.
+                    </p>
+                    <h3 class="text-xl font-semibold">9) Roadmap: From Pilot to Fleet</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Bake in remote telemetry, configuration management, and A/B model rollout from day one. Use containerized deployments with health probes and automated fallbacks to a stable baseline. Document playbooks for recalibration and edge-node swap-out.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Fleet operations thrive on standardization. Normalize device configs (exposure, gain, line rate), directory structures, and metadata schemas. Implement over-the-air updates with cryptographic signing. Mirror logs and calibration artifacts to a central data lake for cross-site analytics and fleet-wide drift detection.
+                    </p>
+                    <h3 class="text-xl font-semibold">10) Where Research Meets Reality</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        The scientific literature on HSI is vast, spanning materials science, remote sensing, and computer vision. Contemporary studies explore transformers for spectral-context fusion, self-supervised pretraining on unlabeled cubes, and physics-informed networks that embed radiative transfer constraints. Industrialization means converting these ideas into stable, maintainable pipelines that run 24/7 on imperfect hardware. Use research to inform your design choices, then validate rigorously on your line.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        For instance, remote-sensing methods such as vegetation indices and decorrelation stretches inspire industrial detection of organic residues or moisture gradients. The translation step is engineering—matching spectral regions to your illumination, mitigating motion blur, and ensuring compute budgets meet takt-time constraints.
+                    </p>
+                    <!-- Supporting YouTube Section -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="aspect-video w-full rounded-lg overflow-hidden border border-gray-700">
+                            <iframe
+                                src="https://www.youtube.com/embed/FjKVptgr3uU"
+                                title="Hyperspectral AI Overview"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                class="w-full h-full"
+                            ></iframe>
+                        </div>
+                        <div class="aspect-video w-full rounded-lg overflow-hidden border border-gray-700">
+                            <iframe
+                                src="https://www.youtube.com/embed/FjKVptgr3uU"
+                                title="Hyperspectral AI Overview"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                class="w-full h-full"
+                            ></iframe>
+                        </div>
+                    </div>
+                    <!-- Clickable Media Grid (Images open full-res) -->
+                    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <a href="../../../assets/images/hyper/florida/florida_etm_2011314_742_xlrg.jpg" target="_blank" class="group relative block rounded-md overflow-hidden border border-gray-700">
+                            <img src="../../../assets/images/optimized/florida_432_400w.jpg" alt="Florida 742 Composite" class="w-full h-40 object-cover group-hover:opacity-90 transition" loading="lazy"/>
+                            <span class="absolute bottom-2 left-2 text-xs bg-black/60 px-2 py-1 rounded">Florida 742</span>
+                        </a>
+                        <a href="../../../assets/images/hyper/piqiang/piqiang_ast_2005055_131210_decorrelation_lrg.jpg" target="_blank" class="group relative block rounded-md overflow-hidden border border-gray-700">
+                            <img src="../../../assets/images/optimized/piqiang_468_400w.jpg" alt="Piqiang decorrelation stretch" class="w-full h-40 object-cover group-hover:opacity-90 transition" loading="lazy"/>
+                            <span class="absolute bottom-2 left-2 text-xs bg-black/60 px-2 py-1 rounded">Decorrelated</span>
+                        </a>
+                        <a href="../../../assets/videos/optimized/particle_720p.mp4" target="_blank" class="group relative block rounded-md overflow-hidden border border-gray-700">
+                            <img src="https://placehold.co/600x300/0f172a/94a3b8?text=HSI+Particle+Demo" alt="HSI Particle Demo" class="w-full h-40 object-cover group-hover:opacity-90 transition" loading="lazy"/>
+                            <span class="absolute bottom-2 left-2 text-xs bg-black/60 px-2 py-1 rounded">Video Demo</span>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm">Note: YouTube URLs are placeholders; replace with your channel’s videos. All local images and videos reference assets in this repository.</p>
+
+                    <!-- Use Cases and Governance -->
+                    <h3 class="text-xl font-semibold">Use Cases and Case Snapshots</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        The following patterns appear across many deployments. Each snapshot focuses on lessons learned rather than exhaustive detail.
+                    </p>
+                    <h4 class="text-lg font-semibold">Metals and Foundry</h4>
+                    <p class="text-gray-300 leading-relaxed">
+                        Surface oxides, inclusions, and subtle alloy variations can be invisible in RGB yet distinct in VNIR/SWIR. A two-stage approach—fast spectral gating and 3D CNN refinement—enables early, precise rejection. Biggest wins came from stabilizing exposure near hot zones and maintaining clean enclosures.
+                    </p>
+                    <h4 class="text-lg font-semibold">Food and Agriculture</h4>
+                    <p class="text-gray-300 leading-relaxed">
+                        SWIR bands separate moisture and fats, enabling foreign object detection, grading, and ripeness estimation. Operator trust improved when overlays showed spectral evidence and model confidence alongside intuitive RGB views.
+                    </p>
+                    <h4 class="text-lg font-semibold">Polymers and Recycling</h4>
+                    <p class="text-gray-300 leading-relaxed">
+                        Sorting similar plastics requires spectral specificity under real-world contamination. Domain-randomized training improved generalization; economic gains emerged at scale as small per-piece lifts compounded.
+                    </p>
+                    <h4 class="text-lg font-semibold">Pharmaceuticals</h4>
+                    <p class="text-gray-300 leading-relaxed">
+                        Non-destructive checks for content uniformity and coating integrity demand controlled conditions and rigorous validation. Interpretability, audit trails, and change control are mandatory for regulated environments.
+                    </p>
+                    <h3 class="text-xl font-semibold">Governance, Safety, and Quality</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Treat HSI as a quality instrument: document calibration SOPs, model change control, and operator training. Build fail-safes that default to manual inspection on confidence drops or calibration out-of-bounds. Involve quality and safety teams early to define acceptance criteria and traceability.
+                    </p>
+                    <h3 class="text-xl font-semibold">Deployment Patterns</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li><span class="font-semibold">Inline:</span> Real-time decisions with rejectors or robotic pick—highest constraints, largest payoffs.</li>
+                        <li><span class="font-semibold">Nearline:</span> Small buffers allow batching and higher-fidelity analysis—good for brownfield lines.</li>
+                        <li><span class="font-semibold">Offline QA:</span> Sampling-based deep dives—vital for model validation and vendor qualification.</li>
+                    </ul>
+                    <h3 class="text-xl font-semibold">FAQ</h3>
+                    <p class="text-gray-300 leading-relaxed"><span class="font-semibold">What if defects are rare?</span> Use active learning and synthetic augmentations; start in shadow mode to accumulate borderline examples without disrupting production.</p>
+                    <p class="text-gray-300 leading-relaxed"><span class="font-semibold">How many bands are enough?</span> As many as needed to separate classes under your lighting and surface physics. Smart band selection often beats sheer band count.</p>
+                    <p class="text-gray-300 leading-relaxed"><span class="font-semibold">Can this run on the edge?</span> Yes—quantization, band selection, and hybrid routing enable real-time on compact GPUs/NPUs.</p>
+                    <h3 class="text-xl font-semibold">Summary</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Hyperspectral AI succeeds when approached as a system problem. Nail the optics and fixtures, build representative datasets, deploy architectures matched to compute budgets, and validate continuously. Organizations that align quality engineering, operations, and data science realize durable gains: fewer defects, higher throughput, and deeper process insight.
+                    </p>
+                </section>
+
                 <!-- Download Section -->
                 <section id="download" class="text-center space-y-6 bg-gradient-to-r from-blue-900 to-blue-800 rounded-lg p-8">
                     <h2 class="text-3xl font-bold">Download Complete Whitepaper</h2>
@@ -337,7 +543,7 @@ def process_hyperspectral_cube(data_cube):
                             <i data-feather="download" class="w-5 h-5"></i>
                             <span>Download PDF (2.3 MB)</span>
                         </button>
-                        <a href="mailto:research@eklabs.ai?subject=Hyperspectral AI Whitepaper Inquiry" class="text-blue-300 hover:text-white transition-colors flex items-center space-x-2">
+                        <a href="mailto:ekaksharlabs@gmail.com?subject=Hyperspectral AI Whitepaper Inquiry" class="text-blue-300 hover:text-white transition-colors flex items-center space-x-2">
                             <i data-feather="mail" class="w-4 h-4"></i>
                             <span>Contact Research Team</span>
                         </a>
@@ -371,19 +577,29 @@ def process_hyperspectral_cube(data_cube):
                 <section class="space-y-4">
                     <h2 class="text-2xl font-bold text-blue-400">Related Content</h2>
                     <div class="grid md:grid-cols-3 gap-6">
-                        <a href="case-study-foundry.html" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors block">
+                        <a href="../../../assets/pdf/foundry_case_study.pdf" target="_blank" rel="noopener" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors block">
                             <h3 class="text-lg font-bold mb-2">Foundry Case Study</h3>
                             <p class="text-gray-300 text-sm">Real-world implementation in metal casting quality control</p>
                         </a>
-                        <a href="../index.html#technology" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors block">
+                        <a href="../../../index.html#technology" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors block">
                             <h3 class="text-lg font-bold mb-2">Our Technology</h3>
                             <p class="text-gray-300 text-sm">Explore our complete technology stack and capabilities</p>
                         </a>
-                        <a href="mailto:contact@eklabs.ai" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors block">
+                        <a href="mailto:ekaksharlabs@gmail.com" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors block">
                             <h3 class="text-lg font-bold mb-2">Contact Us</h3>
                             <p class="text-gray-300 text-sm">Discuss implementation in your industry</p>
                         </a>
                     </div>
+                </section>
+
+                <!-- References -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-blue-400">References</h2>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Peer‑reviewed research on hyperspectral imaging and AI: <a href="https://www.nature.com/articles/s41598-024-71395-2" target="_blank" rel="noopener" class="text-blue-400 hover:underline">Scientific Reports (Nature, 2024)</a>.</li>
+                        <li>NASA/USGS Landsat: <a href="https://landsat.gsfc.nasa.gov/" target="_blank" rel="noopener" class="text-blue-400 hover:underline">landsat.gsfc.nasa.gov</a>.</li>
+                        <li>Overview tutorials on industrial HSI lighting and optics (vendor-agnostic). Replace with your preferred training resources.</li>
+                    </ul>
                 </section>
 
                 <!-- Author Section - Commented Out -->
@@ -406,12 +622,12 @@ def process_hyperspectral_cube(data_cube):
         </main>
 
         <!-- Footer -->
-        <footer class="bg-gray-950 border-t border-gray-800 py-8">
+    <footer class="bg-gray-950 border-t border-gray-800 py-8">
             <div class="max-w-6xl mx-auto px-4 text-center">
                 <div class="flex justify-center items-center space-x-6 mb-4">
-                    <a href="../index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
-                    <a href="../index.html#technology" class="text-gray-400 hover:text-white transition-colors">Technology</a>
-                    <a href="mailto:contact@eklabs.ai" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+            <a href="../../../index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
+            <a href="../../../index.html#technology" class="text-gray-400 hover:text-white transition-colors">Technology</a>
+                    <a href="mailto:ekaksharlabs@gmail.com" class="text-gray-400 hover:text-white transition-colors">Contact</a>
                 </div>
                 <p class="text-gray-500 text-sm">&copy; 2025 EkLabs. All Rights Reserved.</p>
             </div>
@@ -433,11 +649,9 @@ def process_hyperspectral_cube(data_cube):
             blob.style.top = (y - 150) + 'px';
         });
 
-        // Download button functionality
+        // Download button placeholder
         document.querySelector('.download-btn').addEventListener('click', function() {
-            // Here you would typically trigger the actual PDF download
-            // For now, we'll show an alert
-            alert('PDF download would be triggered here. In production, this would download the actual whitepaper file.');
+            alert('Whitepaper PDF coming soon. Contact ekaksharlabs@gmail.com to request a copy.');
         });
 
         // Smooth scrolling for anchor links
@@ -453,6 +667,10 @@ def process_hyperspectral_cube(data_cube):
                 }
             });
         });
+
+    // No compare slider on this page (removed by request)
     </script>
+
+    
 </body>
 </html>
