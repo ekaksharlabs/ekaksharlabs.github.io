@@ -499,44 +499,6 @@
         .vision-card .content, .robotics-card .content {
             padding: 24px;
         }
-
-        /* Typewriter Effect */
-        .typewriter {
-            overflow: hidden;
-            white-space: nowrap;
-            margin: 0 auto;
-        }
-
-        .typewriter-cursor {
-            display: inline-block;
-            background-color: #3b82f6;
-            width: 3px;
-            animation: blink 1s infinite;
-        }
-
-        .typewriter-text {
-            display: inline;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* Hero text container for typewriter */
-        .hero-typewriter {
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @media (max-width: 768px) {
-            .hero-typewriter {
-                min-height: 150px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -594,26 +556,15 @@
         <section id="hero" class="section" data-video="video-hero">
             <div class="max-w-7xl mx-auto px-6 text-center">
                 <div class="scroll-reveal">
-                    <div class="hero-typewriter">
-                        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8">
-                            <span id="typewriter-line1" class="typewriter">
-                                <span class="typewriter-text"></span>
-                                <span class="typewriter-cursor">&nbsp;</span>
-                            </span><br>
-                            <span id="typewriter-line2" class="typewriter">
-                                <span class="typewriter-text"></span>
-                                <span class="typewriter-cursor" style="display: none;">&nbsp;</span>
-                            </span><br>
-                            <span id="typewriter-line3" class="typewriter">
-                                <span class="typewriter-text"></span>
-                                <span class="typewriter-cursor" style="display: none;">&nbsp;</span>
-                            </span>
-                        </h1>
-                    </div>
-                    <p class="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed opacity-0" id="hero-description">
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8">
+                        Advancing Industry<br>
+                        <span class="gradient-text">with Intelligent</span><br>
+                        Perception
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
                         Pioneering AI-driven solutions for complex industrial challenges through advanced computer vision, hyperspectral imaging, and intelligent robotics.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-6 justify-center opacity-0" id="hero-buttons">
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
                         <a href="#vision" class="btn-primary text-lg">Explore Solutions</a>
                         <a href="#careers" class="btn-secondary text-lg">Join Our Mission</a>
                     </div>
@@ -1126,128 +1077,6 @@
             reveals.forEach((reveal, index) => {
                 reveal.style.transitionDelay = `${index * 0.1}s`;
             });
-        });
-
-        // Typewriter Effect
-        class TypewriterEffect {
-            constructor() {
-                this.phrases = [
-                    { text: "Advancing Industry", line: 1 },
-                    { text: "with Intelligent", line: 2 },
-                    { text: "Perception", line: 3 }
-                ];
-                this.alternativeTexts = [
-                    { text: "with Advanced", line: 2 },
-                    { text: "AI Vision", line: 3 }
-                ];
-                this.currentSet = 10;
-                this.typeSpeed = 20;
-                this.deleteSpeed = 10;
-                this.pauseTime = 10000;
-                this.init();
-            }
-
-            async init() {
-                // Initial typewriter animation
-                await this.typePhrase(this.phrases[0], 1);
-                await this.delay(300);
-                await this.typePhrase(this.phrases[1], 2, true); // Apply gradient to line 2
-                await this.delay(300);
-                await this.typePhrase(this.phrases[2], 3, true); // Apply gradient to line 3
-                
-                // Show description and buttons after initial animation
-                await this.delay(1000);
-                this.showElement('hero-description');
-                await this.delay(500);
-                this.showElement('hero-buttons');
-                
-                // Start cycling - only replace the last two lines
-                await this.delay(3000);
-                this.startCycling();
-            }
-
-            async startCycling() {
-                while (true) {
-                    // Delete only lines 2 and 3 (keeping "Advancing Industry")
-                    await this.deletePhrase(3);
-                    await this.delay(200);
-                    await this.deletePhrase(2);
-                    await this.delay(500);
-                    
-                    // Type new text for lines 2 and 3 with gradient
-                    await this.typePhrase(this.alternativeTexts[0], 2, true);
-                    await this.delay(300);
-                    await this.typePhrase(this.alternativeTexts[1], 3, true);
-                    
-                    // Wait before returning to original
-                    await this.delay(this.pauseTime);
-                    
-                    // Delete and return to original
-                    await this.deletePhrase(3);
-                    await this.delay(200);
-                    await this.deletePhrase(2);
-                    await this.delay(500);
-                    
-                    // Type original text back with gradient
-                    await this.typePhrase(this.phrases[1], 2, true);
-                    await this.delay(300);
-                    await this.typePhrase(this.phrases[2], 3, true);
-                    
-                    // Wait before next cycle
-                    await this.delay(this.pauseTime);
-                }
-            }
-
-            async typePhrase(phrase, lineNumber, isGradient = false) {
-                const element = document.querySelector(`#typewriter-line${lineNumber} .typewriter-text`);
-                const cursor = document.querySelector(`#typewriter-line${lineNumber} .typewriter-cursor`);
-                
-                // Apply gradient class if needed
-                if (isGradient && lineNumber >= 2) {
-                    element.classList.add('gradient-text');
-                } else {
-                    element.classList.remove('gradient-text');
-                }
-                
-                cursor.style.display = 'inline-block';
-                
-                for (let i = 0; i <= phrase.text.length; i++) {
-                    element.textContent = phrase.text.substring(0, i);
-                    await this.delay(this.typeSpeed);
-                }
-                
-                cursor.style.display = 'none';
-            }
-
-            async deletePhrase(lineNumber) {
-                const element = document.querySelector(`#typewriter-line${lineNumber} .typewriter-text`);
-                const cursor = document.querySelector(`#typewriter-line${lineNumber} .typewriter-cursor`);
-                const currentText = element.textContent;
-                
-                cursor.style.display = 'inline-block';
-                
-                for (let i = currentText.length; i >= 0; i--) {
-                    element.textContent = currentText.substring(0, i);
-                    await this.delay(this.deleteSpeed);
-                }
-                
-                cursor.style.display = 'none';
-            }
-
-            showElement(id) {
-                const element = document.getElementById(id);
-                element.style.transition = 'opacity 1s ease';
-                element.style.opacity = '1';
-            }
-
-            delay(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
-        }
-
-        // Initialize typewriter effect when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            new TypewriterEffect();
         });
     </script>
 </body>
