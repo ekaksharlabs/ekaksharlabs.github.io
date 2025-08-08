@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperspectral AI for Industrial Applications | EkLabs Whitepaper</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        /* Apply custom font and consistent styling with landing page */
+        html {
+            scroll-behavior: smooth;
+            box-sizing: border-box;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: white;
+            background-color: #0f0f0f;
+        }
+
+        /* Background video styling similar to main page */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Dark overlay for readability */
+        .content-overlay {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.85);
+            min-height: 100vh;
+        }
+
+        /* Interactive blob effect similar to services section */
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.1), transparent);
+            border-radius: 50%;
+            filter: blur(40px);
+            transition: all 0.3s ease;
+        }
+
+        /* Code blocks styling */
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+
+        /* Quote styling */
+        .quote {
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Download button animation */
+        .download-btn {
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(45deg, #1d4ed8, #3b82f6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="../assets/videos/hyperspectral-data.mp4" type="video/mp4">
+            <!-- Fallback for browsers that don't support video -->
+        </video>
+    </div>
+
+    <!-- Interactive Blob -->
+    <div class="blob-container">
+        <div class="blob" id="mouseBlob"></div>
+    </div>
+
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- Header with Navigation -->
+        <header class="sticky top-0 bg-gray-950 bg-opacity-90 backdrop-blur-sm border-b border-gray-800 z-50">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-2">
+                    <span class="font-bold text-xl text-blue-400">EkLabs</span>
+                </a>
+                <nav class="flex items-center space-x-6">
+                    <a href="../index.html" class="text-gray-300 hover:text-white transition-colors flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>
+                        Back to Home
+                    </a>
+                    <a href="#download" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        Download PDF
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-4 py-12">
+            <!-- Article Header -->
+            <article class="space-y-8">
+                <header class="text-center space-y-4">
+                    <div class="inline-block px-3 py-1 bg-blue-600 bg-opacity-20 rounded-full text-blue-400 text-sm font-medium">
+                        Whitepaper
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+                        Hyperspectral AI for Industrial Applications
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Revolutionary advances in spectral imaging and artificial intelligence for quality control, material identification, and process optimization
+                    </p>
+                    
+                    <!-- Author and Publication Info -->
+                    <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-400 pt-4">
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="users" class="w-4 h-4"></i>
+                            <span>EkLabs Research Team</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="calendar" class="w-4 h-4"></i>
+                            <span>August 2025</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="clock" class="w-4 h-4"></i>
+                            <span>15 min read</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="file-text" class="w-4 h-4"></i>
+                            <span>32 pages</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Abstract -->
+                <section class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                    <h2 class="text-2xl font-bold mb-4 text-blue-400">Abstract</h2>
+                    <p class="text-gray-300 leading-relaxed">
+                        This whitepaper explores the transformative potential of hyperspectral imaging combined with artificial intelligence in industrial applications. We present novel methodologies for real-time spectral analysis, automated quality control systems, and advanced material identification techniques that surpass traditional RGB imaging capabilities. Our research demonstrates significant improvements in detection accuracy, processing speed, and operational efficiency across various industrial sectors including manufacturing, agriculture, mining, and pharmaceuticals.
+                    </p>
+                </section>
+
+                <!-- Table of Contents -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-blue-400">Table of Contents</h2>
+                    <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                        <ol class="space-y-2 text-gray-300">
+                            <li class="flex justify-between">
+                                <span>1. Introduction to Hyperspectral Imaging</span>
+                                <span class="text-gray-500">Page 3</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>2. AI-Driven Spectral Analysis</span>
+                                <span class="text-gray-500">Page 7</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>3. Industrial Applications & Case Studies</span>
+                                <span class="text-gray-500">Page 12</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>4. Performance Metrics & Validation</span>
+                                <span class="text-gray-500">Page 18</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>5. Future Directions & Conclusions</span>
+                                <span class="text-gray-500">Page 25</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>6. References & Appendices</span>
+                                <span class="text-gray-500">Page 28</span>
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- Key Findings -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-blue-400">Key Findings</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 text-white">Detection Accuracy</h3>
+                            <p class="text-gray-300 text-sm">
+                                Our hyperspectral AI systems achieve 97.3% accuracy in defect detection, surpassing traditional RGB methods by 23%.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 text-white">Processing Speed</h3>
+                            <p class="text-gray-300 text-sm">
+                                Real-time processing at 30 FPS with sub-millisecond spectral analysis using optimized neural architectures.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 text-white">Cost Reduction</h3>
+                            <p class="text-gray-300 text-sm">
+                                Implementation reduces quality control costs by 40% while increasing throughput by 65%.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 text-white">Material Identification</h3>
+                            <p class="text-gray-300 text-sm">
+                                Identifies 150+ distinct materials with 99.1% precision using spectral signature matching.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Technical Overview -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-blue-400">Technical Overview</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3">Spectral Data Processing Pipeline</h3>
+                            <p class="text-gray-300 mb-4">
+                                Our proprietary pipeline processes hyperspectral data cubes through multiple stages of enhancement, normalization, and feature extraction:
+                            </p>
+                            <div class="code-block">
+                                <pre class="text-green-400">
+# Hyperspectral Processing Pipeline
+def process_hyperspectral_cube(data_cube):
+    # Noise reduction using adaptive filtering
+    filtered_cube = adaptive_spectral_filter(data_cube)
+    
+    # Atmospheric correction and normalization
+    corrected_cube = atmospheric_correction(filtered_cube)
+    
+    # Feature extraction using deep learning
+    features = spectral_cnn_extractor(corrected_cube)
+    
+    # Classification and anomaly detection
+    results = classify_materials(features)
+    
+    return results
+                                </pre>
+                            </div>
+                        </div>
+
+                        <div class="quote">
+                            <p class="text-gray-200">
+                                "The integration of hyperspectral imaging with AI represents a paradigm shift in industrial quality control, enabling detection of anomalies invisible to the human eye and traditional imaging systems."
+                            </p>
+                            <footer class="text-gray-400 mt-2">— Dr. Hrishikesh, Head of Research, EkLabs</footer>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Applications -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-blue-400">Industrial Applications</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                            <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
+                                <i data-feather="settings" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2">Manufacturing</h3>
+                            <p class="text-gray-300 text-sm">
+                                Real-time quality control, surface defect detection, and material composition verification.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                            <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
+                                <i data-feather="trending-up" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2">Agriculture</h3>
+                            <p class="text-gray-300 text-sm">
+                                Crop health monitoring, disease detection, and precision agriculture optimization.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                            <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
+                                <i data-feather="layers" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2">Mining</h3>
+                            <p class="text-gray-300 text-sm">
+                                Mineral identification, ore grade assessment, and geological mapping.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Download Section -->
+                <section id="download" class="text-center space-y-6 bg-gradient-to-r from-blue-900 to-blue-800 rounded-lg p-8">
+                    <h2 class="text-3xl font-bold">Download Complete Whitepaper</h2>
+                    <p class="text-gray-200 max-w-2xl mx-auto">
+                        Get the full 32-page technical document including detailed methodologies, experimental results, implementation guidelines, and comprehensive case studies.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <button class="download-btn text-white font-bold py-3 px-8 rounded-lg flex items-center space-x-2">
+                            <i data-feather="download" class="w-5 h-5"></i>
+                            <span>Download PDF (2.3 MB)</span>
+                        </button>
+                        <a href="mailto:research@eklabs.ai?subject=Hyperspectral AI Whitepaper Inquiry" class="text-blue-300 hover:text-white transition-colors flex items-center space-x-2">
+                            <i data-feather="mail" class="w-4 h-4"></i>
+                            <span>Contact Research Team</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Authors -->
+                <!-- <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-blue-400">Authors</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 flex items-center space-x-4">
+                            <img src="../assets/images/hrishi.jpg" alt="Dr. Hrishikesh" class="w-16 h-16 rounded-full object-cover">
+                            <div>
+                                <h3 class="text-lg font-bold">Dr. Hrishikesh</h3>
+                                <p class="text-blue-400">Head of Research</p>
+                                <p class="text-sm text-gray-400">Expert in machine learning and spectral imaging</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 flex items-center space-x-4">
+                            <img src="../assets/images/vaibhav.jpg" alt="Vaibhav" class="w-16 h-16 rounded-full object-cover">
+                            <div>
+                                <h3 class="text-lg font-bold">Vaibhav</h3>
+                                <p class="text-blue-400">Engineering Head</p>
+                                <p class="text-sm text-gray-400">Software and hardware integration specialist</p>
+                            </div>
+                        </div>
+                    </div>
+                </section> -->
+
+                <!-- Related Content -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-blue-400">Related Content</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <a href="case-study-foundry.html" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors block">
+                            <h3 class="text-lg font-bold mb-2">Foundry Case Study</h3>
+                            <p class="text-gray-300 text-sm">Real-world implementation in metal casting quality control</p>
+                        </a>
+                        <a href="../index.html#technology" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors block">
+                            <h3 class="text-lg font-bold mb-2">Our Technology</h3>
+                            <p class="text-gray-300 text-sm">Explore our complete technology stack and capabilities</p>
+                        </a>
+                        <a href="mailto:contact@eklabs.ai" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors block">
+                            <h3 class="text-lg font-bold mb-2">Contact Us</h3>
+                            <p class="text-gray-300 text-sm">Discuss implementation in your industry</p>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Author Section - Commented Out -->
+                <!--
+                <div class="bg-gray-900 rounded-lg p-8 mb-12">
+                    <div class="flex items-start space-x-6">
+                        <img src="../assets/images/author-placeholder.jpg" alt="Dr. Sarah Johnson" class="w-20 h-20 rounded-full object-cover">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Dr. Sarah Johnson</h3>
+                            <p class="text-blue-400 mb-3">Hyperspectral Imaging Specialist</p>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                Dr. Johnson is a leading expert in hyperspectral imaging and spectral analysis. She has developed 
+                                cutting-edge algorithms for material identification and quality control systems.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </article>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-950 border-t border-gray-800 py-8">
+            <div class="max-w-6xl mx-auto px-4 text-center">
+                <div class="flex justify-center items-center space-x-6 mb-4">
+                    <a href="../index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                    <a href="../index.html#technology" class="text-gray-400 hover:text-white transition-colors">Technology</a>
+                    <a href="mailto:contact@eklabs.ai" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+                </div>
+                <p class="text-gray-500 text-sm">&copy; 2025 EkLabs. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Interactive blob that follows mouse
+        const blob = document.getElementById('mouseBlob');
+        
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            blob.style.left = (x - 150) + 'px';
+            blob.style.top = (y - 150) + 'px';
+        });
+
+        // Download button functionality
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            // Here you would typically trigger the actual PDF download
+            // For now, we'll show an alert
+            alert('PDF download would be triggered here. In production, this would download the actual whitepaper file.');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -11,13 +11,12 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Feather Icons for Hamburger Menu -->
+    <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
 
     <style>
-        /* Apply custom font, smooth scrolling, and universal box-sizing */
         html {
             scroll-behavior: smooth;
             box-sizing: border-box;
@@ -28,29 +27,11 @@
         body {
             font-family: 'Inter', sans-serif;
             color: white;
-            background-color: #000; /* Fallback for when video loads */
-            overflow: hidden; /* Hide body scrollbar on desktop for snap-scroll container */
+            background-color: #0f0f0f;
+            overflow-x: hidden;
         }
 
-        /* Create a container for scroll-snapping on larger screens */
-        .scroll-container {
-            scroll-snap-type: y mandatory;
-            overflow-y: scroll;
-            height: 100vh;
-        }
-
-        /* Define where each section should snap */
-        .scroll-section {
-            scroll-snap-align: start;
-            height: 100vh; /* Use height for predictable snapping with box-sizing */
-            padding: 6rem 1rem 2rem; /* Adjusted vertical padding */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 100%;
-        }
-
-        /* Style for the video background container */
+        /* Video Background */
         .video-background {
             position: fixed;
             top: 0;
@@ -59,48 +40,162 @@
             height: 100%;
             z-index: -2;
         }
-        
+
         .video-background video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translateX(-50%) translateY(-50%);
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.8s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         .video-background video.active {
-            opacity: 1;
+            opacity: 0.95;
+            z-index: 1;
         }
-        
-        /* Dark overlay for text readability */
-        .dark-overlay {
+
+        /* Content Overlay */
+        .content-overlay {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.7);
+            min-height: 100vh;
+        }
+
+        /* Interactive Blob Effects */
+        .blob-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.65);
             z-index: -1;
+            pointer-events: none;
         }
 
-        /* --- Responsive Flip Card --- */
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(60px);
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .blob-1 {
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.4), rgba(59, 130, 246, 0.1), transparent);
+        }
+
+        .blob-2 {
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.4), rgba(34, 197, 94, 0.1), transparent);
+        }
+
+        .blob-3 {
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.4), rgba(168, 85, 247, 0.1), transparent);
+        }
+
+        /* Scroll Reveal Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-reveal-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-reveal-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Navigation */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Cards */
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(34, 197, 94, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Flip Cards */
         .flip-card {
             background-color: transparent;
-            /* Use clamp() for a fluid width that adapts to viewport size */
-            width: clamp(240px, 22vw, 280px);
-            /* Use clamp() for a fluid height */
-            height: clamp(320px, 30vw, 380px);
+            width: 300px;
+            height: 400px;
             perspective: 1000px;
-            transition: transform 0.2s ease-in-out;
-            flex-shrink: 0; /* Prevent cards from shrinking in flex container */
+            transition: transform 0.3s ease;
         }
-        
+
         .flip-card:hover {
             transform: scale(1.05);
         }
@@ -122,534 +217,1037 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            -webkit-backface-visibility: hidden; /* Safari */
             backface-visibility: hidden;
-            border-radius: 0.75rem;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
 
         .flip-card-front {
-            background-color: rgba(17, 24, 39, 0.8); /* gray-800 with transparency */
-            backdrop-filter: blur(4px);
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .flip-card-back {
-            background-image: linear-gradient(to top right, #001b46, #af4000);
+            background: linear-gradient(135deg, #1e40af, #059669);
             color: white;
             transform: rotateY(180deg);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 32px;
         }
 
-        /* Smaller card for the team section */
-        .team-card {
-            width: clamp(160px, 15vw, 200px);
-            height: clamp(220px, 19vw, 260px);
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #22c55e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* On smaller screens (<= 767px), allow natural page scrolling */
-        @media (max-width: 767px) {
-            body {
-                overflow: auto; /* Allow body to scroll on mobile */
-            }
-            .scroll-container {
-                scroll-snap-type: none; /* Disable snap scrolling */
-                overflow-y: visible; /* Let content flow naturally */
-                height: auto; /* Let container grow with content */
-            }
-            .scroll-section {
-                height: auto; /* Allow sections to have natural height */
-                min-height: 100vh; /* Each section takes at least full screen height */
-                padding-top: 5rem;
-                padding-bottom: 3rem;
-            }
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            border: 2px solid rgba(59, 130, 246, 0.6);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            transform: translateY(-3px);
+        }
+
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 80px 0;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Statistics Counter */
+        .stat-counter {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #3b82f6, #22c55e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
             .flip-card {
-                width: 260px; /* Smaller fixed width for mobile */
-                height: 340px; /* Smaller fixed height for mobile */
+                width: 280px;
+                height: 360px;
             }
-            .team-card {
-                width: 45%; /* Two cards per row on mobile */
-                height: 240px;
+            
+            .feature-card {
+                padding: 24px;
+            }
+            
+            .stat-counter {
+                font-size: 2rem;
+            }
+        }
+
+        /* Parallax Effect */
+        .parallax {
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+
+        /* Hyperspectral Image Cards */
+        .hyperspectral-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .hyperspectral-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hyperspectral-card .image-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .hyperspectral-card .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .hyperspectral-card:hover .image-container img {
+            transform: scale(1.05);
+        }
+
+        .hyperspectral-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hyperspectral-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .hyperspectral-card .read-more-btn {
+            background: rgba(59, 130, 246, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .hyperspectral-card:hover .read-more-btn {
+            transform: translateY(0);
+        }
+
+        .hyperspectral-card .content {
+            padding: 24px;
+        }
+
+        /* Computer Vision and Robotics Cards - same styling */
+        .vision-card, .robotics-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .vision-card:hover, .robotics-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .vision-card .image-container, .robotics-card .image-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .vision-card .image-container img, .robotics-card .image-container img,
+        .vision-card .image-container video, .robotics-card .image-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .vision-card:hover .image-container img, .robotics-card:hover .image-container img,
+        .vision-card:hover .image-container video, .robotics-card:hover .image-container video {
+            transform: scale(1.05);
+        }
+
+        .vision-card .overlay, .robotics-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vision-card:hover .overlay, .robotics-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .vision-card .read-more-btn, .robotics-card .read-more-btn {
+            background: rgba(59, 130, 246, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .vision-card:hover .read-more-btn, .robotics-card:hover .read-more-btn {
+            transform: translateY(0);
+        }
+
+        .vision-card .content, .robotics-card .content {
+            padding: 24px;
+        }
+
+        /* Typewriter Effect */
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+        }
+
+        .typewriter-cursor {
+            display: inline-block;
+            background-color: #3b82f6;
+            width: 3px;
+            animation: blink 1s infinite;
+        }
+
+        .typewriter-text {
+            display: inline;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Hero text container for typewriter */
+        .hero-typewriter {
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero-typewriter {
+                min-height: 150px;
             }
         }
     </style>
 </head>
-<body class="bg-black antialiased">
-
-    <!-- Container for all background videos -->
+<body>
+    <!-- Background Videos -->
     <div class="video-background">
-        <video id="video1" class="active" autoplay loop muted playsinline>
+        <video id="video-hero" class="active" autoplay loop muted playsinline>
             <source src="./assets/videos/fireball_small.mp4" type="video/mp4">
         </video>
-        <video id="video2" autoplay loop muted playsinline>
-            <source src="./assets/videos/thermal.mp4" type="video/mp4">
+        <video id="video-vision" autoplay loop muted playsinline>
+            <source src="./assets/videos/nightvision.mp4" type="video/mp4">
         </video>
-        <video id="video3" autoplay loop muted playsinline>
+        <video id="video-hyperspectral" autoplay loop muted playsinline>
             <source src="./assets/videos/motion.mp4" type="video/mp4">
         </video>
-        <video id="video4" autoplay loop muted playsinline>
+        <video id="video-robotics" autoplay loop muted playsinline>
             <source src="./assets/videos/robo.mp4" type="video/mp4">
         </video>
-        <!-- <video id="video5" autoplay loop muted playsinline>
-            <source src="./assets/videos/teams.mp4" type="video/mp4">
-        </video> -->
-        <video id="video6" autoplay loop muted playsinline>
+        <video id="video-careers" autoplay loop muted playsinline>
             <source src="./assets/videos/career.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Dark overlay for text readability -->
-    <div class="dark-overlay"></div>
+    <!-- Interactive Blobs -->
+    <div class="blob-container">
+        <div class="blob blob-1" id="blob1"></div>
+        <div class="blob blob-2" id="blob2"></div>
+        <div class="blob blob-3" id="blob3"></div>
+    </div>
 
-    <!-- Header (fixed position) -->
-    <header class="fixed top-0 left-0 right-0 z-20 py-4 px-6 sm:px-12 lg:px-16 bg-black bg-opacity-20 backdrop-blur-sm transition-all duration-300">
-        <nav class="flex justify-between items-center">
-            <a href="#home" class="text-xl font-bold tracking-widest uppercase">EkLabs</a>
-            <!-- Desktop Menu -->
-            <ul class="hidden md:flex items-center space-x-8">
-                <li><a href="#vision" class="text-base text-gray-300 hover:text-white transition-colors">Vision</a></li>
-                <li><a href="#hyperspectral" class="text-base text-gray-300 hover:text-white transition-colors">Hyperspectral</a></li>
-                <li><a href="#robotics" class="text-base text-gray-300 hover:text-white transition-colors">Robotics</a></li>
-                <!-- <li><a href="#team" class="text-base text-gray-300 hover:text-white transition-colors">Our Team</a></li> -->
-                <li><a href="#careers" class="text-base text-gray-300 hover:text-white transition-colors">Careers</a></li>
-            </ul>
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-white focus:outline-none">
-                    <i data-feather="menu" class="w-6 h-6"></i>
-                </button>
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- Navigation -->
+        <nav class="fixed top-0 left-0 right-0 bg-gray-950 bg-opacity-90 backdrop-blur-md z-50 border-b border-gray-800">
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <a href="#hero" class="font-bold text-2xl cursor-pointer transition-all duration-300 hover:scale-105">
+                        <span class="gradient-text">EkLabs</span>
+                    </a>
+                    
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="#vision" class="nav-link text-gray-300 hover:text-white">Vision</a>
+                        <a href="#hyperspectral" class="nav-link text-gray-300 hover:text-white">Hyperspectral</a>
+                        <a href="#robotics" class="nav-link text-gray-300 hover:text-white">Robotics</a>
+                        <a href="#careers" class="nav-link text-gray-300 hover:text-white">Careers</a>
+                    </div>
+                    
+                    <button class="md:hidden text-white">
+                        <i data-feather="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
             </div>
         </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden mt-4">
-            <ul class="flex flex-col items-center space-y-4">
-                <li><a href="#vision" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Vision</a></li>
-                <li><a href="#hyperspectral" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Hyperspectral</a></li>
-                <li><a href="#robotics" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Robotics</a></li>
-                <!-- <li><a href="#team" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Our Team</a></li> -->
-                <li><a href="#careers" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Careers</a></li>
-            </ul>
-        </div>
-    </header>
 
-    <!-- Scrollable container for all content sections -->
-    <div id="scroll-container" class="scroll-container">
-
-        <!-- Section 1: Hero -->
-        <section id="home" data-video-target="video1" class="scroll-section text-center">
-            <div class="max-w-5xl mx-auto">
-                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
-                    Advancing Industry<br>with Intelligent Perception
-                </h1>
-                <p class="mt-6 text-lg sm:text-xl text-gray-300">
-                    Pioneering AI-driven solutions for complex industrial challenges.
-                </p>
-            </div>
-        </section>
-
-        <!-- Section 2: Computer Vision -->
-        <section id="vision" data-video-target="video2" class="scroll-section text-center">
-            <div class="w-full max-w-6xl mx-auto">
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-4 md:mb-6">
-                    Mastery in<br>Computer Vision
-                </h2>
-                <p class="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto mb-6 md:mb-8">
-                    We develop robust computer vision models that automate quality control, enhance safety, and optimize production lines, turning visual data into actionable intelligence.
-                </p>
-                <div class="flex flex-wrap justify-center items-center gap-4 md:gap-8">
-                    <!-- Cards will be here -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col">
-                                <img src="https://placehold.co/280x285/111827/FFFFFF?text=QC" alt="Quality Inspection" class="w-full h-3/4 object-cover">
-                                <h3 class="text-xl font-bold flex-grow flex items-center justify-center">Quality Inspection</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-2xl font-bold mb-2">Automated QC</h3>
-                                <p>Detect defects and anomalies in real-time with superhuman accuracy, ensuring product excellence.</p>
-                            </div>
-                        </div>
+        <!-- Hero Section -->
+        <section id="hero" class="section" data-video="video-hero">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <div class="scroll-reveal">
+                    <div class="hero-typewriter">
+                        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8">
+                            <span id="typewriter-line1" class="typewriter">
+                                <span class="typewriter-text"></span>
+                                <span class="typewriter-cursor">&nbsp;</span>
+                            </span><br>
+                            <span id="typewriter-line2" class="typewriter">
+                                <span class="typewriter-text"></span>
+                                <span class="typewriter-cursor" style="display: none;">&nbsp;</span>
+                            </span><br>
+                            <span id="typewriter-line3" class="typewriter">
+                                <span class="typewriter-text"></span>
+                                <span class="typewriter-cursor" style="display: none;">&nbsp;</span>
+                            </span>
+                        </h1>
                     </div>
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col">
-                                <img src="https://placehold.co/280x285/1f2937/FFFFFF?text=Tracking" alt="Object Detection" class="w-full h-3/4 object-cover">
-                                <h3 class="text-xl font-bold flex-grow flex items-center justify-center">Object Detection</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-2xl font-bold mb-2">Smart Tracking</h3>
-                                <p>Identify, classify, and track objects to streamline logistics, inventory, and on-site safety protocols.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col">
-                                <img src="https://placehold.co/280x285/374151/FFFFFF?text=Automation" alt="Process Automation" class="w-full h-3/4 object-cover">
-                                <h3 class="text-xl font-bold flex-grow flex items-center justify-center">Process Automation</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-2xl font-bold mb-2">Optimize Flow</h3>
-                                <p>Use visual data to monitor and automate complex manufacturing and assembly line processes.</p>
-                            </div>
-                        </div>
+                    <p class="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed opacity-0" id="hero-description">
+                        Pioneering AI-driven solutions for complex industrial challenges through advanced computer vision, hyperspectral imaging, and intelligent robotics.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center opacity-0" id="hero-buttons">
+                        <a href="#vision" class="btn-primary text-lg">Explore Solutions</a>
+                        <a href="#careers" class="btn-secondary text-lg">Join Our Mission</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: HyperSpectral Imaging -->
-        <section id="hyperspectral" data-video-target="video3" class="scroll-section text-center">
-            <div class="w-full max-w-6xl mx-auto">
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-4 md:mb-6">
-                    Beyond Human Sight<br>with Hyperspectral Imaging
-                </h2>
-                <p class="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto mb-6 md:mb-8">
-                    Our hyperspectral solutions analyze material compositions with incredible precision, enabling non-destructive testing and analysis.
-                </p>
-                <div class="flex flex-wrap justify-center items-center gap-4 md:gap-8">
-                     <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col">
-                                <img src="./assets/images/foundry.gif" alt="Case Studies" class="w-full h-3/4 object-cover">
-                                <h3 class="text-xl font-bold flex-grow flex items-center justify-center">Case Studies</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-2xl font-bold mb-2">Success Stories</h3>
-                                <p>Explore how we've solved real-world industrial problems using advanced hyperspectral analysis.</p>
-                                <br><br>
-                                <a href="#" class="text-blue-600 hover:underline">View Case Study</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card Placehold with a linked page -->
-                    <!-- <a href="case-study-foundry.html" class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col">
-                                <img src="./assets/images/foundry.gif" alt="Case Studies" class="w-full h-3/4 object-cover">
-                                <h3 class="text-xl font-bold flex-grow flex items-center justify-center">Case Studies</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-2xl font-bold mb-2">Success Stories</h3>
-                                <p>Explore how we've solved real-world industrial problems using advanced hyperspectral analysis.</p>
-                            </div>
-                        </div>
-                    </a> -->
-
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col">
-                                <img src="./assets/images/whitepaper.jpg" alt="Whitepapers" class="w-full h-3/4 object-cover">
-                                <h3 class="text-xl font-bold flex-grow flex items-center justify-center">Whitepapers</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-2xl font-bold mb-2">In-Depth Research</h3>
-                                <p>Read our detailed research on the latest breakthroughs in hyperspectral imaging methodologies.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col">
-                                <img src="https://placehold.co/280x285/374151/FFFFFF?text=Prototype" alt="Prototypes" class="w-full h-3/4 object-cover">
-                                <h3 class="text-xl font-bold flex-grow flex items-center justify-center">Prototypes</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-2xl font-bold mb-2">See it in Action</h3>
-                                <p>Discover our proof-of-concept prototypes that demonstrate the power of our technology</p>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Computer Vision Section -->
+        <section id="vision" class="section" data-video="video-vision">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 scroll-reveal">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-8">
+                        Mastery in<br>
+                        <span class="gradient-text">Computer Vision</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
+                        We develop robust computer vision models that automate quality control, enhance safety, and optimize production lines, turning visual data into actionable intelligence.
+                    </p>
                 </div>
-            </div>
-        </section>
-
-        <!-- Section 4: Robotics -->
-        <section id="robotics" data-video-target="video4" class="scroll-section text-center">
-             <div class="w-full max-w-6xl mx-auto">
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-4 md:mb-6">
-                    Intelligent Robotics<br>for a Smarter Workflow
-                </h2>
-                <p class="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto mb-6 md:mb-8">
-                    We integrate our advanced vision systems with robotic platforms to create autonomous solutions that handle complex tasks with speed and precision.
-                </p>
-                <div class="flex flex-wrap justify-center items-center gap-4 md:gap-8">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col">
-                                <img src="https://placehold.co/280x285/111827/FFFFFF?text=VGR" alt="Vision-Guided Robotics" class="w-full h-3/4 object-cover">
-                                <h3 class="text-xl font-bold flex-grow flex items-center justify-center">Vision-Guided Robotics</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-2xl font-bold mb-2">Precision in Motion</h3>
-                                <p>Empowering robots with advanced sight to perform complex pick-and-place, assembly, and navigation tasks.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col">
-                                <img src="https://placehold.co/280x285/1f2937/FFFFFF?text=Autonomous" alt="Autonomous Systems" class="w-full h-3/4 object-cover">
-                                <h3 class="text-xl font-bold flex-grow flex items-center justify-center">Autonomous Systems</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-2xl font-bold mb-2">Full Autonomy</h3>
-                                <p>Developing end-to-end autonomous solutions that operate intelligently and adapt to dynamic environments.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        
-        <!-- 
-        
-        TEAMS SECTION IS COMMENTED NOT BY BLOCKS, BUT BY LINE 
-        SO WHEN UNCOMMENTING, MAKE SURE TO UNCOMMENT THE WHOLE SECTION LINE BY LINE.
-        -->
-        <!-- Section 5: Our Team -->
-        
-        
-        
-        <!-- <section id="team" data-video-target="video5" class="scroll-section text-center"> -->
-            <!--
-            <div class="w-full max-w-7xl mx-auto">
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-4 md:mb-6">
-                    The Minds Behind<br>the Mission
-                </h2>
-                <p class="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto mb-6 md:mb-8">Meet the innovators and experts dedicated to pushing the boundaries of industrial AI.</p>
-                <div class="flex flex-wrap justify-center items-center gap-4 md:gap-6">
-            -->
-                    <!-- Team Member 1 -->
-                    <!-- <div class="flip-card team-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col p-4 justify-center items-center">
-                                <img src="./assets/images/vaibhav.jpg" alt="Team Member" class="w-24 h-24 rounded-full object-cover mb-4">
-                                <h3 class="text-xl font-bold">Vaibhav</h3>
-                                <p class="text-sm text-gray-400">Engineering Head</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-lg font-bold mb-2">Vaibhav</h3>
-                                <p class="text-sm flex-grow">Master architect of our robust software and hardware integrations.</p>
-                                <div class="flex space-x-4 mt-4">
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="linkedin"></i></a>
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                     <!-- Team Member 2 -->
-                    <!-- <div class="flip-card team-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col p-4 justify-center items-center">
-                                <img src="./assets/images/hrishi.jpg" alt="Team Member" class="w-24 h-24 rounded-full object-cover mb-4">
-                                <h3 class="text-xl font-bold">Hrishikesh</h3>
-                                <p class="text-sm text-gray-400">Head of Research</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-lg font-bold mb-2">Hrishikesh</h3>
-                                <p class="text-sm flex-grow">Expert in machine learning and robotics, driving our research.</p>
-                                <div class="flex space-x-4 mt-4">
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="linkedin"></i></a>
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- Team Member 3 -->
-                    <!-- <div class="flip-card team-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col p-4 justify-center items-center">
-                                <img src="./assets/images/aarti_sharma.jpg" alt="Team Member" class="w-24 h-24 rounded-full object-cover mb-4">
-                                <h3 class="text-xl font-bold">Aarti Sharma</h3>
-                                <p class="text-sm text-gray-400">Co-Founder</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-lg font-bold mb-2">Aarti Sharma</h3>
-                                <p class="text-sm flex-grow">Deep-Tech Researcher bridging AI theory and industrial application.</p>
-                                <div class="flex space-x-4 mt-4">
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="linkedin"></i></a>
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- Team Member 4 -->
-                    <!-- <div class="flip-card team-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col p-4 justify-center items-center">
-                                <img src="https://placehold.co/96x96/1f2937/FFFFFF?text=P4" alt="Team Member" class="w-24 h-24 rounded-full object-cover mb-4">
-                                <h3 class="text-xl font-bold">Person 4</h3>
-                                <p class="text-sm text-gray-400">AI Scientist</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-lg font-bold mb-2">Person 4</h3>
-                                <p class="text-sm flex-grow">Specializes in developing novel neural network architectures.</p>
-                                <div class="flex space-x-4 mt-4">
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="linkedin"></i></a>
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- Team Member 5 -->
-                    <!-- <div class="flip-card team-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col p-4 justify-center items-center">
-                                <img src="https://placehold.co/96x96/374151/FFFFFF?text=P5" alt="Team Member" class="w-24 h-24 rounded-full object-cover mb-4">
-                                <h3 class="text-xl font-bold">Person 5</h3>
-                                <p class="text-sm text-gray-400">Robotics Specialist</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-lg font-bold mb-2">Person 5</h3>
-                                <p class="text-sm flex-grow">Focuses on sensor fusion and autonomous navigation algorithms.</p>
-                                <div class="flex space-x-4 mt-4">
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="linkedin"></i></a>
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- Team Member 6 -->
-                    <!-- <div class="flip-card team-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col p-4 justify-center items-center">
-                                <img src="https://placehold.co/96x96/4b5563/FFFFFF?text=P6" alt="Team Member" class="w-24 h-24 rounded-full object-cover mb-4">
-                                <h3 class="text-xl font-bold">Person 6</h3>
-                                <p class="text-sm text-gray-400">Data Engineer</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-lg font-bold mb-2">Person 6</h3>
-                                <p class="text-sm flex-grow">Builds scalable data pipelines for real-time processing.</p>
-                                <div class="flex space-x-4 mt-4">
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="linkedin"></i></a>
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- Team Member 7 -->
-                    <!-- <div class="flip-card team-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front flex flex-col p-4 justify-center items-center">
-                                <img src="https://placehold.co/96x96/6b7280/FFFFFF?text=P7" alt="Team Member" class="w-24 h-24 rounded-full object-cover mb-4">
-                                <h3 class="text-xl font-bold">Person 7</h3>
-                                <p class="text-sm text-gray-400">Product Manager</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-lg font-bold mb-2">Person 7</h3>
-                                <p class="text-sm flex-grow">Defines product vision and translates customer needs into features.</p>
-                                <div class="flex space-x-4 mt-4">
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="linkedin"></i></a>
-                                    <a href="#" target="_blank" class="text-white hover:text-gray-300 transition-colors"><i data-feather="github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 
-                <!--
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div class="vision-card scroll-reveal">
+                        <div class="image-container">
+                            <video autoplay loop muted playsinline>
+                                <source src="./assets/videos/nightvision.mp4" type="video/mp4">
+                            </video>
+                            <div class="overlay">
+                                <a href="./pages/vision-guided-robotics.html" class="read-more-btn">
+                                    <i data-feather="eye" class="w-4 h-4"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="text-2xl font-bold text-white mb-2">Real-Time Detection</h3>
+                            <p class="text-gray-300">Advanced AI models for instant object recognition with 99.7% accuracy at 60+ FPS.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="vision-card scroll-reveal" style="transition-delay: 0.2s;">
+                        <div class="image-container">
+                            <video autoplay loop muted playsinline>
+                                <source src="./assets/videos/thermal.mp4" type="video/mp4">
+                            </video>
+                            <div class="overlay">
+                                <a href="./pages/vision-guided-robotics.html" class="read-more-btn">
+                                    <i data-feather="target" class="w-4 h-4"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="text-2xl font-bold text-white mb-2">Quality Control</h3>
+                            <p class="text-gray-300">Automated inspection systems that detect defects invisible to human eyes with 0.1mm precision.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="vision-card scroll-reveal" style="transition-delay: 0.4s;">
+                        <div class="image-container">
+                            <video autoplay loop muted playsinline>
+                                <source src="./assets/videos/particle.mp4" type="video/mp4">
+                            </video>
+                            <div class="overlay">
+                                <a href="./pages/vision-guided-robotics.html" class="read-more-btn">
+                                    <i data-feather="activity" class="w-4 h-4"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="text-2xl font-bold text-white mb-2">Smart Analytics</h3>
+                            <p class="text-gray-300">AI-powered analytics that transform visual data into actionable business insights.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center scroll-reveal">
+                    <a href="./pages/vision-guided-robotics.html" class="btn-primary">
+                        <i data-feather="file-text" class="w-5 h-5 mr-2 inline"></i>
+                        Read Technical Paper
+                    </a>
                 </div>
             </div>
         </section>
-        -->
 
-        <!-- Section 6: Careers -->
-        <!-- Section 6: Careers -->
-        <section id="careers" data-video-target="video6" class="scroll-section text-center relative">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tighter">
-                    Shape the Future<br>With Us
-                </h2>
-                <p class="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">
-                    We are always looking for brilliant minds to join our mission. If you are a passionate Researcher or Engineer with a drive to solve real-world problems, we want to hear from you.
-                </p>
-                <a href="mailto:EkaksharLabs@gmail.com" class="mt-8 inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors">
-                    Reach Out
-                </a>
-            </div>
-            <!-- Copyright Footer -->
-            <div class="absolute bottom-4 right-4 text-m text-gray-400">
-                &copy; 2025 EkLabs. All Rights Reserved.
+        <!-- Hyperspectral Section -->
+        <section id="hyperspectral" class="section" data-video="video-hyperspectral">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 scroll-reveal">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-8">
+                        Beyond Human Sight with<br>
+                        <span class="gradient-text">Hyperspectral Imaging</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                        Our hyperspectral solutions analyze material compositions with incredible precision, enabling non-destructive testing and analysis across hundreds of spectral bands.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div class="hyperspectral-card scroll-reveal">
+                        <div class="image-container">
+                            <img src="./assets/images/hyper/florida/florida_etm_2011314_432_xlrg.jpg" alt="Florida Coastal Analysis">
+                            <div class="overlay">
+                                <a href="./pages/whitepaper-hyperspectral-ai.html" class="read-more-btn">
+                                    <i data-feather="eye" class="w-4 h-4"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="text-2xl font-bold text-white mb-2">Coastal Analysis</h3>
+                            <p class="text-gray-300">Advanced spectral analysis of coastal environments and water quality monitoring.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="hyperspectral-card scroll-reveal" style="transition-delay: 0.2s;">
+                        <div class="image-container">
+                            <img src="./assets/images/hyper/piqiang/piqiang_ast_2005055_468_decorrelation_lrg.jpg" alt="Geological Survey">
+                            <div class="overlay">
+                                <a href="./pages/whitepaper-hyperspectral-ai.html" class="read-more-btn">
+                                    <i data-feather="layers" class="w-4 h-4"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="text-2xl font-bold text-white mb-2">Geological Survey</h3>
+                            <p class="text-gray-300">Mineral identification and geological mapping using advanced spectral techniques.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="hyperspectral-card scroll-reveal" style="transition-delay: 0.4s;">
+                        <div class="image-container">
+                            <img src="./assets/images/hyper/piqiang/piqiang_ast_2005055_nir_gray_lrg.jpg" alt="NIR Spectroscopy">
+                            <div class="overlay">
+                                <a href="./pages/whitepaper-hyperspectral-ai.html" class="read-more-btn">
+                                    <i data-feather="search" class="w-4 h-4"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="text-2xl font-bold text-white mb-2">NIR Spectroscopy</h3>
+                            <p class="text-gray-300">Near-infrared analysis for material composition and quality assessment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics moved here -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="scroll-reveal">
+                        <div class="stat-counter" data-target="99">0</div>
+                        <p class="text-gray-400 font-medium">% Accuracy Rate</p>
+                    </div>
+                    <div class="scroll-reveal" style="transition-delay: 0.1s;">
+                        <div class="stat-counter" data-target="250">0</div>
+                        <p class="text-gray-400 font-medium">Spectral Bands</p>
+                    </div>
+                    <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                        <div class="stat-counter" data-target="15">0</div>
+                        <p class="text-gray-400 font-medium">Industries Served</p>
+                    </div>
+                    <div class="scroll-reveal" style="transition-delay: 0.3s;">
+                        <div class="stat-counter" data-target="24">0</div>
+                        <p class="text-gray-400 font-medium">Hour Support</p>
+                    </div>
+                </div>
             </div>
         </section>
+
+        <!-- Robotics Section -->
+        <section id="robotics" class="section" data-video="video-robotics">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 scroll-reveal">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-8">
+                        Intelligent<br>
+                        <span class="gradient-text">Robotics</span><br>
+                        for Smarter Workflow
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
+                        We integrate our advanced vision systems with robotic platforms to create autonomous solutions that handle complex tasks with speed and precision.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div class="robotics-card scroll-reveal">
+                        <div class="image-container">
+                            <video autoplay loop muted playsinline>
+                                <source src="./assets/videos/robo.mp4" type="video/mp4">
+                            </video>
+                            <div class="overlay">
+                                <a href="./pages/vision-guided-robotics.html" class="read-more-btn">
+                                    <i data-feather="settings" class="w-4 h-4"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="text-2xl font-bold text-white mb-2">Vision-Guided Manipulation</h3>
+                            <p class="text-gray-300">Robots that see, understand, and interact with their environment using advanced computer vision and machine learning.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="robotics-card scroll-reveal" style="transition-delay: 0.2s;">
+                        <div class="image-container">
+                            <video autoplay loop muted playsinline>
+                                <source src="./assets/videos/bacteria.mp4" type="video/mp4">
+                            </video>
+                            <div class="overlay">
+                                <a href="./pages/autonomous-systems.html" class="read-more-btn">
+                                    <i data-feather="cpu" class="w-4 h-4"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="text-2xl font-bold text-white mb-2">Autonomous Systems</h3>
+                            <p class="text-gray-300">Self-learning robotics that adapt and optimize industrial processes with minimal human intervention.</p>
+                        </div>
+                    </div>
+
+                    <div class="robotics-card scroll-reveal" style="transition-delay: 0.4s;">
+                        <div class="image-container">
+                            <video autoplay loop muted playsinline>
+                                <source src="./assets/videos/motion.mp4" type="video/mp4">
+                            </video>
+                            <div class="overlay">
+                                <a href="./pages/autonomous-systems.html" class="read-more-btn">
+                                    <i data-feather="zap" class="w-4 h-4"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="text-2xl font-bold text-white mb-2">Smart Manufacturing</h3>
+                            <p class="text-gray-300">Intelligent automation systems that optimize production workflows and enhance operational efficiency.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center scroll-reveal">
+                    <a href="./pages/vision-guided-robotics.html" class="btn-primary mr-4">
+                        <i data-feather="file-text" class="w-4 h-4 mr-2 inline"></i>
+                        Read Technical Paper
+                    </a>
+                    <a href="./pages/autonomous-systems.html" class="btn-secondary">
+                        <i data-feather="cpu" class="w-4 h-4 mr-2 inline"></i>
+                        Explore Systems
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Careers Section -->
+        <section id="careers" class="section" data-video="video-careers">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <div class="scroll-reveal">
+                    <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8">
+                        Shape the Future<br>
+                        <span class="gradient-text">With Us</span>
+                    </h2>
+                    <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
+                        We are always looking for brilliant minds to join our mission. If you are a passionate Researcher or Engineer with a drive to solve real-world problems, we want to hear from you.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <a href="mailto:EkaksharLabs@gmail.com" class="btn-primary text-lg">
+                            <i data-feather="mail" class="w-5 h-5 mr-2 inline"></i>
+                            Reach Out
+                        </a>
+                        <a href="mailto:EkaksharLabs@gmail.com?subject=Partnership Inquiry" class="btn-secondary text-lg">
+                            <i data-feather="users" class="w-5 h-5 mr-2 inline"></i>
+                            Partner With Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-950 border-t border-gray-800 py-12">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="font-bold text-2xl mb-4">
+                            <span class="gradient-text">EkLabs</span>
+                        </div>
+                        <p class="text-gray-400">Pioneering the future of industrial AI and vision systems.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-4 text-white">Solutions</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a href="#vision" class="hover:text-white transition-colors">Computer Vision</a></li>
+                            <li><a href="#hyperspectral" class="hover:text-white transition-colors">Hyperspectral AI</a></li>
+                            <li><a href="#robotics" class="hover:text-white transition-colors">Intelligent Robotics</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-4 text-white">Resources</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a href="./pages/whitepaper-hyperspectral-ai.html" class="hover:text-white transition-colors">Whitepapers</a></li>
+                            <li><a href="./pages/vision-guided-robotics.html" class="hover:text-white transition-colors">Technical Papers</a></li>
+                            <li><a href="./pages/autonomous-systems.html" class="hover:text-white transition-colors">Case Studies</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-4 text-white">Contact</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a href="mailto:EkaksharLabs@gmail.com" class="hover:text-white transition-colors">Email Us</a></li>
+                            <li><a href="#careers" class="hover:text-white transition-colors">Careers</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                    <p>&copy; 2025 EkLabs. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script>
-        // --- Feather Icons Initialization ---
+        // Initialize Feather Icons
         feather.replace();
 
-        // --- Mobile Menu Toggle ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        // Initialize video playback
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroVideo = document.getElementById('video-hero');
+            const allVideos = document.querySelectorAll('.video-background video');
+            
+            // Preload all videos
+            allVideos.forEach(video => {
+                video.load();
+                video.addEventListener('loadeddata', () => {
+                    console.log('Video loaded:', video.id);
+                });
+                video.addEventListener('error', (e) => {
+                    console.error('Video error for', video.id, ':', e);
+                });
+            });
+            
+            if (heroVideo) {
+                heroVideo.play().catch(e => console.log('Initial video autoplay prevented:', e));
+            }
         });
 
-        // Close menu when a link is clicked
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        // Intersection Observer for Scroll Reveals
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll reveal elements
+        document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Video switching based on sections
+        const sections = document.querySelectorAll('.section');
+        const videos = document.querySelectorAll('.video-background video');
+
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const videoId = entry.target.getAttribute('data-video');
+                    console.log('Section in view:', entry.target.id, 'Video ID:', videoId); // Debug log
+                    
+                    if (videoId) {
+                        // Add a small delay to ensure smooth transition
+                        setTimeout(() => {
+                            // Deactivate all videos
+                            videos.forEach(video => {
+                                video.classList.remove('active');
+                                video.pause(); // Pause inactive videos to save resources
+                            });
+
+                            // Activate target video
+                            const targetVideo = document.getElementById(videoId);
+                            if (targetVideo) {
+                                targetVideo.classList.add('active');
+                                // Ensure the video is playing
+                                targetVideo.play().catch(e => {
+                                    console.log('Video autoplay prevented for', videoId, ':', e);
+                                    // Try to load the video if it failed
+                                    targetVideo.load();
+                                });
+                                console.log('Activated video:', videoId); // Debug log
+                            } else {
+                                console.error('Video element not found:', videoId);
+                            }
+                        }, 100);
+                    }
+                }
+            });
+        }, { 
+            threshold: [0.3, 0.7],
+            rootMargin: '-20% 0px -20% 0px'
+        });
+
+        // Add debugging for sections
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section[data-video]');
+            console.log('Found sections with data-video:', sections.length);
+            sections.forEach(section => {
+                console.log('Section:', section.id, 'Video:', section.getAttribute('data-video'));
+            });
+            
+            const videos = document.querySelectorAll('.video-background video');
+            console.log('Found videos:', videos.length);
+            videos.forEach(video => {
+                console.log('Video:', video.id, 'Source:', video.querySelector('source')?.src);
             });
         });
 
-        // --- Intersection Observer for Video Switching ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('.scroll-section');
-            const videos = document.querySelectorAll('.video-background video');
-            
-            // Use matchMedia to check for screen size
-            const isMobile = window.matchMedia("(max-width: 767px)").matches;
+        sections.forEach(section => {
+            videoObserver.observe(section);
+        });
 
-            // Fallback for browsers that don't support IntersectionObserver well
-            if (!('IntersectionObserver' in window)) {
-                console.log("IntersectionObserver not supported, video switching may not work.");
-                return;
+        // Interactive blob movement
+        document.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
+            
+            const xPos = (clientX / innerWidth) - 0.5;
+            const yPos = (clientY / innerHeight) - 0.5;
+            
+            // Move blobs based on mouse position
+            const blob1 = document.getElementById('blob1');
+            const blob2 = document.getElementById('blob2');
+            const blob3 = document.getElementById('blob3');
+            
+            blob1.style.transform = `translate(${clientX - 200 + xPos * 50}px, ${clientY - 200 + yPos * 50}px)`;
+            blob2.style.transform = `translate(${clientX - 100 - xPos * 30}px, ${clientY - 100 - yPos * 30}px)`;
+            blob3.style.transform = `translate(${clientX - 150 + xPos * 70}px, ${clientY - 150 + yPos * 70}px)`;
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax');
+            
+            parallaxElements.forEach(element => {
+                const speed = 0.5;
+                const yPos = -(scrolled * speed);
+                element.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+
+        // Counter animation
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const duration = 2000;
+            const stepTime = duration / 100;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current);
+            }, stepTime);
+        }
+
+        // Start counter animation when in view
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    animateCounter(counter, target);
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-counter').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add stagger delay to scroll reveals
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            reveals.forEach((reveal, index) => {
+                reveal.style.transitionDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Typewriter Effect
+        class TypewriterEffect {
+            constructor() {
+                this.phrases = [
+                    { text: "Advancing Industry", line: 1 },
+                    { text: "with Intelligent", line: 2 },
+                    { text: "Perception", line: 3 }
+                ];
+                this.alternativeTexts = [
+                    { text: "with Advanced", line: 2 },
+                    { text: "AI Vision", line: 3 }
+                ];
+                this.currentSet = 10;
+                this.typeSpeed = 20;
+                this.deleteSpeed = 10;
+                this.pauseTime = 10000;
+                this.init();
             }
 
-            // Define observer options. The root is the viewport on mobile (null)
-            // and the specific scroll container on desktop.
-            const observerOptions = {
-                root: isMobile ? null : document.querySelector('.scroll-container'),
-                threshold: 0.5 // Trigger when 50% of the section is visible
-            };
+            async init() {
+                // Initial typewriter animation
+                await this.typePhrase(this.phrases[0], 1);
+                await this.delay(300);
+                await this.typePhrase(this.phrases[1], 2, true); // Apply gradient to line 2
+                await this.delay(300);
+                await this.typePhrase(this.phrases[2], 3, true); // Apply gradient to line 3
+                
+                // Show description and buttons after initial animation
+                await this.delay(1000);
+                this.showElement('hero-description');
+                await this.delay(500);
+                this.showElement('hero-buttons');
+                
+                // Start cycling - only replace the last two lines
+                await this.delay(3000);
+                this.startCycling();
+            }
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    // Ensure the entry is intersecting more than the threshold
-                    if (entry.isIntersecting) {
-                        const videoId = entry.target.getAttribute('data-video-target');
-                        
-                        // Deactivate all videos
-                        videos.forEach(video => {
-                            video.classList.remove('active');
-                        });
+            async startCycling() {
+                while (true) {
+                    // Delete only lines 2 and 3 (keeping "Advancing Industry")
+                    await this.deletePhrase(3);
+                    await this.delay(200);
+                    await this.deletePhrase(2);
+                    await this.delay(500);
+                    
+                    // Type new text for lines 2 and 3 with gradient
+                    await this.typePhrase(this.alternativeTexts[0], 2, true);
+                    await this.delay(300);
+                    await this.typePhrase(this.alternativeTexts[1], 3, true);
+                    
+                    // Wait before returning to original
+                    await this.delay(this.pauseTime);
+                    
+                    // Delete and return to original
+                    await this.deletePhrase(3);
+                    await this.delay(200);
+                    await this.deletePhrase(2);
+                    await this.delay(500);
+                    
+                    // Type original text back with gradient
+                    await this.typePhrase(this.phrases[1], 2, true);
+                    await this.delay(300);
+                    await this.typePhrase(this.phrases[2], 3, true);
+                    
+                    // Wait before next cycle
+                    await this.delay(this.pauseTime);
+                }
+            }
 
-                        // Activate the target video
-                        const targetVideo = document.getElementById(videoId);
-                        if (targetVideo) {
-                            targetVideo.classList.add('active');
-                            // Ensure the video plays
-                            targetVideo.play().catch(error => {
-                                // Autoplay was prevented.
-                                console.log("Video autoplay prevented for:", videoId, error);
-                            });
-                        }
-                    }
-                });
-            }, observerOptions);
+            async typePhrase(phrase, lineNumber, isGradient = false) {
+                const element = document.querySelector(`#typewriter-line${lineNumber} .typewriter-text`);
+                const cursor = document.querySelector(`#typewriter-line${lineNumber} .typewriter-cursor`);
+                
+                // Apply gradient class if needed
+                if (isGradient && lineNumber >= 2) {
+                    element.classList.add('gradient-text');
+                } else {
+                    element.classList.remove('gradient-text');
+                }
+                
+                cursor.style.display = 'inline-block';
+                
+                for (let i = 0; i <= phrase.text.length; i++) {
+                    element.textContent = phrase.text.substring(0, i);
+                    await this.delay(this.typeSpeed);
+                }
+                
+                cursor.style.display = 'none';
+            }
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
+            async deletePhrase(lineNumber) {
+                const element = document.querySelector(`#typewriter-line${lineNumber} .typewriter-text`);
+                const cursor = document.querySelector(`#typewriter-line${lineNumber} .typewriter-cursor`);
+                const currentText = element.textContent;
+                
+                cursor.style.display = 'inline-block';
+                
+                for (let i = currentText.length; i >= 0; i--) {
+                    element.textContent = currentText.substring(0, i);
+                    await this.delay(this.deleteSpeed);
+                }
+                
+                cursor.style.display = 'none';
+            }
+
+            showElement(id) {
+                const element = document.getElementById(id);
+                element.style.transition = 'opacity 1s ease';
+                element.style.opacity = '1';
+            }
+
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
+        // Initialize typewriter effect when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new TypewriterEffect();
         });
     </script>
 </body>

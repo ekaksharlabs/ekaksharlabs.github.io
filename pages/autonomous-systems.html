@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Systems | EkLabs Technical Paper</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+            box-sizing: border-box;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: white;
+            background-color: #0f0f0f;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content-overlay {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.85);
+            min-height: 100vh;
+        }
+
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.3), rgba(147, 51, 234, 0.1), transparent);
+            border-radius: 50%;
+            filter: blur(40px);
+            transition: all 0.3s ease;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+
+        .quote {
+            border-left: 4px solid #9333ea;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            background: rgba(147, 51, 234, 0.1);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #9333ea, #7c3aed);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(45deg, #7c3aed, #9333ea);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(147, 51, 234, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="../assets/videos/autonomous-systems.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Interactive Blob -->
+    <div class="blob-container">
+        <div class="blob" id="mouseBlob"></div>
+    </div>
+
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- Header -->
+        <header class="sticky top-0 bg-gray-950 bg-opacity-90 backdrop-blur-sm border-b border-gray-800 z-50">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-2">
+                    <span class="font-bold text-xl text-purple-400">EkLabs</span>
+                </a>
+                <nav class="flex items-center space-x-6">
+                    <a href="../index.html#robotics" class="text-gray-300 hover:text-white transition-colors flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>
+                        Back to Robotics
+                    </a>
+                    <a href="#download" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                        Download Paper
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-4 py-12">
+            <article class="space-y-8">
+                <!-- Header -->
+                <header class="text-center space-y-4">
+                    <div class="inline-block px-3 py-1 bg-purple-600 bg-opacity-20 rounded-full text-purple-400 text-sm font-medium">
+                        Technical Paper
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+                        Autonomous Systems
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Developing end-to-end autonomous solutions that operate intelligently and adapt to dynamic environments with full autonomy
+                    </p>
+                    
+                    <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-400 pt-4">
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="users" class="w-4 h-4"></i>
+                            <span>EkLabs Autonomy Team</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="calendar" class="w-4 h-4"></i>
+                            <span>August 2025</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="clock" class="w-4 h-4"></i>
+                            <span>18 min read</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Featured Image -->
+                <div class="rounded-lg overflow-hidden">
+                    <img src="https://placehold.co/800x400/1f2937/FFFFFF?text=Autonomous+Navigation+System" alt="Autonomous Systems" class="w-full h-64 object-cover">
+                </div>
+
+                <!-- Introduction -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-purple-400">Introduction</h2>
+                    <p class="text-gray-300 leading-relaxed">
+                        Autonomous systems represent the pinnacle of artificial intelligence integration in industrial applications. These systems combine advanced perception, decision-making, and actuation capabilities to operate independently in complex, dynamic environments without human intervention.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Our autonomous solutions leverage multi-modal sensor fusion, reinforcement learning, and predictive analytics to create intelligent systems that not only respond to their environment but anticipate and adapt to changing conditions in real-time.
+                    </p>
+                </section>
+
+                <!-- Core Components -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-purple-400">Core Components</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i data-feather="layers" class="w-5 h-5 mr-2 text-purple-400"></i>
+                                Multi-Sensor Fusion
+                            </h3>
+                            <p class="text-gray-300 text-sm">
+                                Integration of LiDAR, cameras, radar, and IMU sensors with advanced Kalman filtering for comprehensive environmental understanding.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i data-feather="brain" class="w-5 h-5 mr-2 text-purple-400"></i>
+                                AI Decision Engine
+                            </h3>
+                            <p class="text-gray-300 text-sm">
+                                Deep reinforcement learning models trained on millions of scenarios for optimal decision-making in uncertain environments.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i data-feather="navigation" class="w-5 h-5 mr-2 text-purple-400"></i>
+                                Path Planning
+                            </h3>
+                            <p class="text-gray-300 text-sm">
+                                Dynamic trajectory optimization with real-time obstacle avoidance using RRT* and model predictive control algorithms.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i data-feather="shield" class="w-5 h-5 mr-2 text-purple-400"></i>
+                                Safety Systems
+                            </h3>
+                            <p class="text-gray-300 text-sm">
+                                Multi-layered safety protocols with fail-safe mechanisms and emergency stop capabilities for industrial compliance.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Architecture -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-purple-400">System Architecture</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3">Autonomous Control Loop</h3>
+                            <div class="code-block">
+                                <pre class="text-purple-400">
+# Autonomous System Control Loop
+class AutonomousSystem:
+    def __init__(self):
+        self.perception = MultiSensorFusion()
+        self.planning = PathPlanner()
+        self.control = MotionController()
+        self.safety = SafetyMonitor()
+    
+    def autonomous_loop(self):
+        while self.is_active():
+            # Perception phase
+            world_state = self.perception.get_world_state()
+            
+            # Planning phase
+            trajectory = self.planning.plan_path(
+                current_pose=world_state.pose,
+                goal=self.current_goal,
+                obstacles=world_state.obstacles
+            )
+            
+            # Safety check
+            if self.safety.is_safe(trajectory):
+                # Execution phase
+                self.control.execute_trajectory(trajectory)
+            else:
+                self.safety.emergency_stop()
+            
+            # Learning and adaptation
+            self.update_models(world_state, trajectory)
+                                </pre>
+                            </div>
+                        </div>
+
+                        <div class="quote">
+                            <p class="text-gray-200">
+                                "True autonomy isn't just about following pre-programmed instructions—it's about creating systems that can think, learn, and adapt in real-time while maintaining the highest safety standards."
+                            </p>
+                            <footer class="text-gray-400 mt-2">— Dr. Hrishikesh, Head of Research, EkLabs</footer>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Applications -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-purple-400">Industrial Applications</h2>
+                    <div class="space-y-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3">Autonomous Material Handling</h3>
+                            <p class="text-gray-300 mb-3">
+                                Fully autonomous mobile robots for warehouse and factory floor operations with dynamic route optimization and collaborative multi-robot coordination.
+                            </p>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Navigation: GPS-denied indoor navigation with cm-level accuracy</li>
+                                <li>• Payload: Up to 1000kg autonomous load handling</li>
+                                <li>• Efficiency: 30% reduction in material handling time</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3">Smart Manufacturing Cells</h3>
+                            <p class="text-gray-300 mb-3">
+                                Autonomous manufacturing systems that adapt to product variations, optimize production schedules, and perform self-maintenance.
+                            </p>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Flexibility: Handles 500+ product variants automatically</li>
+                                <li>• Uptime: 98.7% availability with predictive maintenance</li>
+                                <li>• Quality: Zero-defect manufacturing with inline corrections</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3">Environmental Monitoring</h3>
+                            <p class="text-gray-300 mb-3">
+                                Autonomous drones and ground vehicles for industrial site monitoring, safety compliance, and environmental assessment.
+                            </p>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Coverage: 10km² autonomous patrol capability</li>
+                                <li>• Duration: 8+ hours continuous operation</li>
+                                <li>• Detection: Multi-spectral anomaly identification</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Technology Stack -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-purple-400">Technology Stack</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 text-center">Perception</h3>
+                            <ul class="text-sm text-gray-300 space-y-2">
+                                <li>• LiDAR SLAM</li>
+                                <li>• Stereo Vision</li>
+                                <li>• Radar Fusion</li>
+                                <li>• IMU Integration</li>
+                                <li>• Point Cloud Processing</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 text-center">Intelligence</h3>
+                            <ul class="text-sm text-gray-300 space-y-2">
+                                <li>• Deep Q-Networks</li>
+                                <li>• Transformer Models</li>
+                                <li>• Bayesian Inference</li>
+                                <li>• Genetic Algorithms</li>
+                                <li>• Edge Computing</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 text-center">Control</h3>
+                            <ul class="text-sm text-gray-300 space-y-2">
+                                <li>• MPC Controllers</li>
+                                <li>• PID Optimization</li>
+                                <li>• Trajectory Planning</li>
+                                <li>• Force Control</li>
+                                <li>• Safety Monitors</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Performance Metrics -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-purple-400">Performance Metrics</h2>
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="text-center bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <div class="text-3xl font-bold text-purple-400 mb-2">99.2%</div>
+                            <div class="text-sm text-gray-300">Mission Success</div>
+                        </div>
+                        <div class="text-center bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <div class="text-3xl font-bold text-purple-400 mb-2">5cm</div>
+                            <div class="text-sm text-gray-300">Navigation Accuracy</div>
+                        </div>
+                        <div class="text-center bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <div class="text-3xl font-bold text-purple-400 mb-2">50ms</div>
+                            <div class="text-sm text-gray-300">Decision Latency</div>
+                        </div>
+                        <div class="text-center bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <div class="text-3xl font-bold text-purple-400 mb-2">24/7</div>
+                            <div class="text-sm text-gray-300">Operation Capability</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Future Directions -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-purple-400">Future Directions</h2>
+                    <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-lg font-bold mb-3">Swarm Intelligence</h3>
+                                <p class="text-gray-300 text-sm">
+                                    Development of collaborative autonomous systems that work together as a coordinated swarm for complex industrial tasks.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-3">Quantum-Enhanced AI</h3>
+                                <p class="text-gray-300 text-sm">
+                                    Integration of quantum computing for exponentially faster optimization and decision-making in autonomous systems.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-3">Neuromorphic Computing</h3>
+                                <p class="text-gray-300 text-sm">
+                                    Brain-inspired computing architectures for ultra-low power, real-time autonomous processing.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-3">Digital Twins</h3>
+                                <p class="text-gray-300 text-sm">
+                                    Virtual replicas of autonomous systems for simulation, testing, and continuous improvement.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Download Section -->
+                <section id="download" class="text-center space-y-6 bg-gradient-to-r from-purple-900 to-purple-800 rounded-lg p-8">
+                    <h2 class="text-3xl font-bold">Download Technical Paper</h2>
+                    <p class="text-gray-200 max-w-2xl mx-auto">
+                        Access the complete technical documentation covering autonomous system architecture, implementation strategies, and deployment case studies.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <button class="download-btn text-white font-bold py-3 px-8 rounded-lg flex items-center space-x-2">
+                            <i data-feather="download" class="w-5 h-5"></i>
+                            <span>Download PDF (2.7 MB)</span>
+                        </button>
+                        <a href="mailto:autonomy@eklabs.ai?subject=Autonomous Systems Inquiry" class="text-purple-300 hover:text-white transition-colors flex items-center space-x-2">
+                            <i data-feather="mail" class="w-4 h-4"></i>
+                            <span>Contact Autonomy Team</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Authors -->
+                <!-- <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-purple-400">Authors</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 flex items-center space-x-4">
+                            <img src="../assets/images/hrishi.jpg" alt="Dr. Hrishikesh" class="w-16 h-16 rounded-full object-cover">
+                            <div>
+                                <h3 class="text-lg font-bold">Dr. Hrishikesh</h3>
+                                <p class="text-purple-400">Head of Research</p>
+                                <p class="text-sm text-gray-400">Autonomous systems and AI specialist</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 flex items-center space-x-4">
+                            <img src="../assets/images/vaibhav.jpg" alt="Vaibhav" class="w-16 h-16 rounded-full object-cover">
+                            <div>
+                                <h3 class="text-lg font-bold">Vaibhav</h3>
+                                <p class="text-purple-400">Engineering Head</p>
+                                <p class="text-sm text-gray-400">Autonomous systems integration expert</p>
+                            </div>
+                        </div>
+                    </div>
+                </section> -->
+
+                <!-- Author Section - Commented Out -->
+                <!--
+                <div class="bg-gray-900 rounded-lg p-8 mb-12">
+                    <div class="flex items-start space-x-6">
+                        <img src="../assets/images/author-placeholder.jpg" alt="Dr. Michael Chen" class="w-20 h-20 rounded-full object-cover">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Dr. Michael Chen</h3>
+                            <p class="text-blue-400 mb-3">Autonomous Systems Director</p>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                Dr. Chen specializes in autonomous robotics and multi-agent systems. With a background in mechanical 
+                                engineering and AI, he has led breakthrough projects in industrial automation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </article>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-950 border-t border-gray-800 py-8">
+            <div class="max-w-6xl mx-auto px-4 text-center">
+                <div class="flex justify-center items-center space-x-6 mb-4">
+                    <a href="../index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                    <a href="../index.html#robotics" class="text-gray-400 hover:text-white transition-colors">Robotics</a>
+                    <a href="mailto:contact@eklabs.ai" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+                </div>
+                <p class="text-gray-500 text-sm">&copy; 2025 EkLabs. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Interactive blob
+        const blob = document.getElementById('mouseBlob');
+        
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            blob.style.left = (x - 150) + 'px';
+            blob.style.top = (y - 150) + 'px';
+        });
+
+        // Download functionality
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            alert('PDF download would be triggered here. In production, this would download the actual technical paper.');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

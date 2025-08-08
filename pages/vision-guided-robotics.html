@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision-Guided Robotics | EkLabs Technical Paper</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+            box-sizing: border-box;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: white;
+            background-color: #0f0f0f;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content-overlay {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.85);
+            min-height: 100vh;
+        }
+
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.3), rgba(34, 197, 94, 0.1), transparent);
+            border-radius: 50%;
+            filter: blur(40px);
+            transition: all 0.3s ease;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+
+        .quote {
+            border-left: 4px solid #22c55e;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            background: rgba(34, 197, 94, 0.1);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #22c55e, #16a34a);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(45deg, #16a34a, #22c55e);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="../assets/videos/robotics-demo.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Interactive Blob -->
+    <div class="blob-container">
+        <div class="blob" id="mouseBlob"></div>
+    </div>
+
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- Header -->
+        <header class="sticky top-0 bg-gray-950 bg-opacity-90 backdrop-blur-sm border-b border-gray-800 z-50">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-2">
+                    <span class="font-bold text-xl text-green-400">EkLabs</span>
+                </a>
+                <nav class="flex items-center space-x-6">
+                    <a href="../index.html#robotics" class="text-gray-300 hover:text-white transition-colors flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>
+                        Back to Robotics
+                    </a>
+                    <a href="#download" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        Download Paper
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-4 py-12">
+            <article class="space-y-8">
+                <!-- Header -->
+                <header class="text-center space-y-4">
+                    <div class="inline-block px-3 py-1 bg-green-600 bg-opacity-20 rounded-full text-green-400 text-sm font-medium">
+                        Technical Paper
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+                        Vision-Guided Robotics
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Empowering robots with advanced sight to perform complex pick-and-place, assembly, and navigation tasks with unprecedented precision
+                    </p>
+                    
+                    <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-400 pt-4">
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="users" class="w-4 h-4"></i>
+                            <span>EkLabs Robotics Team</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="calendar" class="w-4 h-4"></i>
+                            <span>August 2025</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="clock" class="w-4 h-4"></i>
+                            <span>12 min read</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Featured Image -->
+                <div class="rounded-lg overflow-hidden">
+                    <img src="https://placehold.co/800x400/111827/FFFFFF?text=Vision-Guided+Robotics+System" alt="Vision-Guided Robotics" class="w-full h-64 object-cover">
+                </div>
+
+                <!-- Introduction -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-green-400">Introduction</h2>
+                    <p class="text-gray-300 leading-relaxed">
+                        Vision-guided robotics represents a paradigm shift in industrial automation, where robots gain the ability to see, understand, and interact with their environment in real-time. By integrating advanced computer vision algorithms with precise robotic control systems, we enable machines to perform tasks that previously required human intervention.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Our approach combines state-of-the-art deep learning models with real-time image processing to create robotic systems that can adapt to dynamic environments, handle complex geometries, and maintain high precision across various industrial applications.
+                    </p>
+                </section>
+
+                <!-- Key Technologies -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-green-400">Key Technologies</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i data-feather="eye" class="w-5 h-5 mr-2 text-green-400"></i>
+                                Real-Time Object Detection
+                            </h3>
+                            <p class="text-gray-300 text-sm">
+                                Advanced YOLO-based detection systems capable of identifying and localizing objects with sub-pixel accuracy at 60+ FPS.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i data-feather="target" class="w-5 h-5 mr-2 text-green-400"></i>
+                                6DOF Pose Estimation
+                            </h3>
+                            <p class="text-gray-300 text-sm">
+                                Precise 6-degree-of-freedom pose estimation enabling robots to handle objects in any orientation with millimeter precision.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i data-feather="zap" class="w-5 h-5 mr-2 text-green-400"></i>
+                                Adaptive Control
+                            </h3>
+                            <p class="text-gray-300 text-sm">
+                                Dynamic path planning and obstacle avoidance with real-time trajectory optimization based on visual feedback.
+                            </p>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i data-feather="cpu" class="w-5 h-5 mr-2 text-green-400"></i>
+                                Edge Computing
+                            </h3>
+                            <p class="text-gray-300 text-sm">
+                                Optimized neural networks running on edge devices for minimal latency and maximum responsiveness.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Technical Implementation -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-green-400">Technical Implementation</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3">Vision Processing Pipeline</h3>
+                            <div class="code-block">
+                                <pre class="text-green-400">
+# Vision-Guided Robot Control Pipeline
+class VisionGuidedRobot:
+    def __init__(self):
+        self.camera = StereoCamera()
+        self.detector = ObjectDetector()
+        self.pose_estimator = PoseEstimator()
+        self.robot_arm = RobotArm()
+    
+    def pick_and_place(self, target_object):
+        # Capture stereo images
+        left_img, right_img = self.camera.capture()
+        
+        # Detect objects in scene
+        detections = self.detector.detect(left_img)
+        
+        # Estimate 6DOF pose
+        pose = self.pose_estimator.estimate(
+            detections[target_object], left_img, right_img
+        )
+        
+        # Plan and execute grasp
+        grasp_pose = self.calculate_grasp_pose(pose)
+        self.robot_arm.move_to_pose(grasp_pose)
+        self.robot_arm.grasp()
+        
+        return True
+                                </pre>
+                            </div>
+                        </div>
+
+                        <div class="quote">
+                            <p class="text-gray-200">
+                                "The integration of real-time vision processing with robotic control creates a feedback loop that enables robots to adapt and learn from their environment, much like human vision-motor coordination."
+                            </p>
+                            <footer class="text-gray-400 mt-2">— Vaibhav, Engineering Head, EkLabs</footer>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Applications -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-green-400">Industrial Applications</h2>
+                    <div class="space-y-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3">Manufacturing Assembly</h3>
+                            <p class="text-gray-300 mb-3">
+                                Automated assembly of complex mechanical components with real-time quality verification and adaptive handling of part variations.
+                            </p>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Precision: ±0.1mm positional accuracy</li>
+                                <li>• Speed: 15-20 parts per minute</li>
+                                <li>• Quality: 99.7% first-pass success rate</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3">Warehouse Automation</h3>
+                            <p class="text-gray-300 mb-3">
+                                Intelligent pick-and-place systems for e-commerce fulfillment with dynamic object recognition and handling optimization.
+                            </p>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Throughput: 600+ picks per hour</li>
+                                <li>• Accuracy: 99.9% pick accuracy</li>
+                                <li>• Adaptability: Handles 1000+ SKUs</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <h3 class="text-lg font-bold mb-3">Quality Inspection</h3>
+                            <p class="text-gray-300 mb-3">
+                                Automated visual inspection and sorting with defect detection capabilities surpassing human visual acuity.
+                            </p>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Detection: 0.1mm defect resolution</li>
+                                <li>• Speed: 100% inline inspection</li>
+                                <li>• Reliability: 24/7 operation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Performance Metrics -->
+                <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-green-400">Performance Metrics</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <div class="text-3xl font-bold text-green-400 mb-2">97.3%</div>
+                            <div class="text-sm text-gray-300">Task Success Rate</div>
+                        </div>
+                        <div class="text-center bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <div class="text-3xl font-bold text-green-400 mb-2">15ms</div>
+                            <div class="text-sm text-gray-300">Average Latency</div>
+                        </div>
+                        <div class="text-center bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                            <div class="text-3xl font-bold text-green-400 mb-2">±0.1mm</div>
+                            <div class="text-sm text-gray-300">Positioning Accuracy</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Download Section -->
+                <section id="download" class="text-center space-y-6 bg-gradient-to-r from-green-900 to-green-800 rounded-lg p-8">
+                    <h2 class="text-3xl font-bold">Download Technical Paper</h2>
+                    <p class="text-gray-200 max-w-2xl mx-auto">
+                        Access the complete technical documentation including implementation details, performance benchmarks, and integration guidelines.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <button class="download-btn text-white font-bold py-3 px-8 rounded-lg flex items-center space-x-2">
+                            <i data-feather="download" class="w-5 h-5"></i>
+                            <span>Download PDF (1.8 MB)</span>
+                        </button>
+                        <a href="mailto:robotics@eklabs.ai?subject=Vision-Guided Robotics Inquiry" class="text-green-300 hover:text-white transition-colors flex items-center space-x-2">
+                            <i data-feather="mail" class="w-4 h-4"></i>
+                            <span>Contact Robotics Team</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Authors -->
+                <!-- <section class="space-y-4">
+                    <h2 class="text-2xl font-bold text-green-400">Authors</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 flex items-center space-x-4">
+                            <img src="../assets/images/hrishi.jpg" alt="Dr. Hrishikesh" class="w-16 h-16 rounded-full object-cover">
+                            <div>
+                                <h3 class="text-lg font-bold">Dr. Hrishikesh</h3>
+                                <p class="text-green-400">Head of Research</p>
+                                <p class="text-sm text-gray-400">Expert in machine learning and robotics</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6 border border-gray-700 flex items-center space-x-4">
+                            <img src="../assets/images/vaibhav.jpg" alt="Vaibhav" class="w-16 h-16 rounded-full object-cover">
+                            <div>
+                                <h3 class="text-lg font-bold">Vaibhav</h3>
+                                <p class="text-green-400">Engineering Head</p>
+                                <p class="text-sm text-gray-400">Robotics systems integration specialist</p>
+                            </div>
+                        </div>
+                    </div>
+                </section> -->
+
+                <!-- Author Section - Commented Out -->
+                <!--
+                <div class="bg-gray-900 rounded-lg p-8 mb-12">
+                    <div class="flex items-start space-x-6">
+                        <img src="../assets/images/author-placeholder.jpg" alt="Dr. Jane Smith" class="w-20 h-20 rounded-full object-cover">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Dr. Jane Smith</h3>
+                            <p class="text-blue-400 mb-3">Lead Computer Vision Engineer</p>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                Dr. Smith leads our computer vision research team with over 15 years of experience in AI and robotics. 
+                                She holds a PhD in Computer Science from MIT and has published over 50 papers in top-tier conferences.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </article>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-950 border-t border-gray-800 py-8">
+            <div class="max-w-6xl mx-auto px-4 text-center">
+                <div class="flex justify-center items-center space-x-6 mb-4">
+                    <a href="../index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                    <a href="../index.html#robotics" class="text-gray-400 hover:text-white transition-colors">Robotics</a>
+                    <a href="mailto:contact@eklabs.ai" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+                </div>
+                <p class="text-gray-500 text-sm">&copy; 2025 EkLabs. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Interactive blob
+        const blob = document.getElementById('mouseBlob');
+        
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            blob.style.left = (x - 150) + 'px';
+            blob.style.top = (y - 150) + 'px';
+        });
+
+        // Download functionality
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            alert('PDF download would be triggered here. In production, this would download the actual technical paper.');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
